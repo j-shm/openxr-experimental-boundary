@@ -80,6 +80,7 @@ public class LoadObjects : MonoBehaviour
                         GameObject objPlaced = Instantiate(objectToPlace, corner.transform);
                         objPlaced.transform.localScale = ArrayToVector(objScale);
                         objPlaced.transform.localPosition = ArrayToVector(objPos);
+                        objPlaced.GetComponent<ObjectData>().placed = true;
                     }
 
                 }
