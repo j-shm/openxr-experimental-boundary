@@ -3,31 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-/* Overview of the system
-
-                    ┌─────────────────────────────────┐
-                    │                                 │
-                    │        HandleRayTable.cs        │
-                    │                ▲                │
-                    │                │                │
-                    │        ┌───────┤                │
-                    │  spawns│       │                │
-                    │        │       ▼                │spawns
-                    │        │  DrawObject.cs         │
-                    ▼        │                        │
-       ┌────────►object ◄────┘                        │
-       │         │ │                                  │
-       │         │ └───────────►SaveObjects.cs        │
-deletes│         │                    │               │          starts
-       ├─────────objectdata.cs        │         LoadObjects.cs◄──────────FindAndStartSave.cs
-       │  needs                       │               ▲
-       │                  Serialises  │               │
-   DeleteObject.cs              into  │      ┌────────┴──────┐
-                                      ▼      │               │
-                                SerialObject.cs ◄───────────SerialObjects.cs
-                                                 stores
- */
-
 public class HandleRayTable : MonoBehaviour
 {
     //interactors
