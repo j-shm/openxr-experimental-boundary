@@ -53,7 +53,7 @@ public class HandleRayTable : MonoBehaviour
 
     //we have picked a height now we will spawn the object
     private void Deselect(SelectExitEventArgs args)
-    { 
+    {
         placedObject = Instantiate(objToPlace, startingPoint, Quaternion.identity);
     }
     private void Update()
