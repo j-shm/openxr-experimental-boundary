@@ -14,8 +14,6 @@ public class DrawObject : MonoBehaviour
     }
     public void ResizeObject(GameObject obj, float amount, Vector3 direction)
     {
-        var parent = obj.transform.parent;
-        obj.transform.SetParent(null, true);
         if(direction == Vector3.up || direction == Vector3.down)
         {
             Resize(obj, obj.transform.localScale.y, Vector3.down);
@@ -27,7 +25,6 @@ public class DrawObject : MonoBehaviour
             Resize(obj, obj.transform.localScale.z, Vector3.back);
         }
         Resize(obj, amount, direction);
-        obj.transform.SetParent(parent, true);
     }
     public void ResizeObject(GameObject placedObject, Vector3 spawnPoint, Vector3 maxPoint, Vector3 addPoint)
     {

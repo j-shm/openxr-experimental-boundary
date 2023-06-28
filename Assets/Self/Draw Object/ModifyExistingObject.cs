@@ -16,6 +16,7 @@ public class ModifyExistingObject : MonoBehaviour
     private GameObject selector;
 
     private GameObject objSelected;
+    private Transform objSelectedParent;
 
     private DrawObject resizer;
 
@@ -39,6 +40,7 @@ public class ModifyExistingObject : MonoBehaviour
         {
             Debug.Log("we're getting to the selected part!");
             objSelected = args.interactableObject.transform.gameObject;
+            objSelectedParent = objSelected.transform.parent;
             Main();
         }
     }
@@ -46,8 +48,11 @@ public class ModifyExistingObject : MonoBehaviour
     {
         resizer.ResizeObject(objSelected, FloatFromVector(selector.transform.position - objSelected.transform.position, dirToScale), dirToScale);
         Destroy(selector);
+        objSelected.transform.SetParent(objSelectedParent, true);
+        objSelectedParent = null;
         objSelected = null;
         selector = null;
+        
     }
     private void Update()
     {
@@ -85,6 +90,7 @@ public class ModifyExistingObject : MonoBehaviour
             {
                 selRB.constraints = RigidbodyConstraints.FreezePositionZ;
             }
+            objSelected.transform.SetParent(null, true);
         }
     }
     private Vector3 FindLargestDirection(Vector3 point)
