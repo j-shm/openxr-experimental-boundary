@@ -2999,7 +2999,7 @@ PrefabInstance:
     - target: {fileID: 7462879561657043759, guid: ad818c36731146e994540a1896ad8f24,
         type: 3}
       propertyPath: m_RaycastMask.m_Bits
-      value: 8
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7462879561657043759, guid: ad818c36731146e994540a1896ad8f24,
         type: 3}
@@ -3111,8 +3111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4a64d175af5b441838cca267736edf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectRayInteractor: {fileID: 0}
-  selectorToSpawn: {fileID: 1297524225145150172, guid: 9da8536a902bcb14f8b0ef6aa159358f,
+  objectRayInteractor: {fileID: 188020243}
+  selectorToSpawn: {fileID: 1297524225145150172, guid: fb083f8cb1da53f49aa72fa5c8c7fdce,
     type: 3}
 --- !u!114 &1874037761
 MonoBehaviour:
@@ -3211,7 +3211,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
+    m_Reference: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_SelectActionValue:
     m_UseReference: 1
@@ -3224,7 +3224,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 7904272356298805229, guid: c348712bda248c246b8c49b3db54643f,
+    m_Reference: {fileID: -1758520528963094988, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ActivateAction:
     m_UseReference: 0
@@ -3893,7 +3893,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 0
   m_DistanceCalculationMode: 1
   m_SelectMode: 1
   m_FocusMode: 1
