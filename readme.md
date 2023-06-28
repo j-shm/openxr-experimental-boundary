@@ -10,6 +10,8 @@ The main focus is to allow this to be used on any openxr setup therefore proprie
 | Htc Vive / Cosmos 	| ✔️              	|
 | Index       	| ✔️              	|
 
+🤔 is untested
+
 ## Requirements
 The following and their dependencies are required for the project:
 - [Unity](https://unity.com/) (Made on 2021.3.27f1)
