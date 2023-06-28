@@ -11,7 +11,6 @@ public class DeleteObject : MonoBehaviour
     }
     private void Select(SelectEnterEventArgs args)
     {
-        Debug.Log("why am i not working please explain? i know why: placed hasnt been set!");
         if(args.interactableObject.transform.gameObject.tag != "Corner"
             && args.interactableObject.transform.gameObject.GetComponent<ObjectData>().placed)
         {

@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/*
+ *  FIRST PLACE CORNER
+ *  THEN PLACE OBJECT BY:
+ *  SELECT POINT ON GROUND AND SPAWN SELECTOR
+ *  MOVE SELECTOR TO WANTED HEIGHT
+ *  SELECT LAST POINT ON GROUND
+ */
+
 public class HandleRayTable : MonoBehaviour
 {
     //interactors
@@ -34,7 +42,6 @@ public class HandleRayTable : MonoBehaviour
     //other
     private Vector3 startingPoint;
     
-
     private void Start()
     {   
         rayInteractor = GetComponent<XRRayInteractor>();
@@ -42,25 +49,28 @@ public class HandleRayTable : MonoBehaviour
         objectDrawer = GetComponent<DrawObject>();
     }
     protected virtual void exited(SelectExitEventArgs args) => Deselect(args);
+
+
+    //we have picked a height now we will spawn the object
     private void Deselect(SelectExitEventArgs args)
     { 
         placedObject = Instantiate(objToPlace, startingPoint, Quaternion.identity);
     }
     private void Update()
     {
-        if(rayInteractor.isHoverActive) {
+        //resize the object dynamically to the raycast end point whilst the object is still hasn't been finalised.
+        if (placedObject != null && rayInteractor.isHoverActive)
+        {
             RaycastHit res;
             if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
             {
-                if (placedObject != null)
-                {
-                    objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
-                }
+                objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
             }
         }
     }
     public void Select()
     {
+        //object ray is busy holding something else
         if (objectRayInteractor.interactablesSelected.Count != 0)
         {
             return;
@@ -86,21 +96,19 @@ public class HandleRayTable : MonoBehaviour
                  * there should be a way to get IXRSelectInteractor instead of this obselete method of base interactors however i cannot find how to get the
                  * interactor portion only the interactable so this will have to do.
                  */
-                man.SelectEnter(objectRayInteractor, spawnedSelectorGrabComp); 
+                man.SelectEnter(objectRayInteractor, spawnedSelectorGrabComp);
 
-                spawnedSelectorGrabComp.selectExited.AddListener(exited);
+                //add listener for when the height has been selected by the user deselecting the item
+                spawnedSelectorGrabComp.selectExited.AddListener(exited); 
                 return;
             }
-            /* clean up */
+            /* clean up: remove all the object references and get ready for the next one*/
             objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
             placedObject.GetComponent<ObjectData>().placed = true;
             CleanUp();
         }
     }
-    public void Setup(GameObject corner)
-    {
-        this.corner = corner;
-    }
+
     private void CleanUp()
     {
         if(spawnedSelector != null)
@@ -119,6 +127,8 @@ public class HandleRayTable : MonoBehaviour
         }
 
     }
+
+    //used for the loading system
     public void FullCleanUp()
     {
         if (corner != null)
@@ -127,5 +137,9 @@ public class HandleRayTable : MonoBehaviour
             corner = null;
         }
         CleanUp();
+    }
+    public void Setup(GameObject corner)
+    {
+        this.corner = corner;
     }
 }

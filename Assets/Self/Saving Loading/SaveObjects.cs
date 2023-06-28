@@ -8,12 +8,15 @@ public class SaveObjects : MonoBehaviour
 {
     public void Save()
     {
+        //get all the objects attached to this corner and serialise them for saving.
         List<SerialObject> objects = new List<SerialObject>();
         foreach(Transform child in this.gameObject.transform)
         {
             objects.Add(ObjectToSerialObject(child.gameObject));
         }
+        //add them to the object that holds them all
         SerialObjects objectList = new SerialObjects(objects.ToArray(), VectorToArray(transform.position));
+
         string serialisedObjectList = JsonConvert.SerializeObject(objectList);
         string savePath = GetSavePath();
         if (savePath != "")
@@ -39,7 +42,7 @@ public class SaveObjects : MonoBehaviour
     private SerialObject ObjectToSerialObject(GameObject obj)
     {
         SerialObject serialObj = new SerialObject(
-            VectorToArray(obj.transform.localPosition),
+            VectorToArray(obj.transform.localPosition), //in relation to corner
             VectorToArray(obj.transform.rotation.eulerAngles),
             VectorToArray(obj.transform.localScale)
             );
@@ -47,6 +50,7 @@ public class SaveObjects : MonoBehaviour
         return serialObj;
     }
 
+    //you can't serialise a vector3 so conversion
     private float[] VectorToArray(Vector3 vec)
     {
         float[] vecArray = { vec.x, vec.y, vec.z };

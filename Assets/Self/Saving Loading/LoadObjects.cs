@@ -62,11 +62,13 @@ public class LoadObjects : MonoBehaviour
 
                 //get all the objects in the file
                 JObject o1 = JObject.Parse(File.ReadAllText(file));
-
+                
                 float[] cornerPos = ((JArray)o1["position"]).ToObject<float[]>();
                 corner = Instantiate(cornerToPlace,ArrayToVector(cornerPos),Quaternion.identity);
+
                 var objs = o1["objects"];
                 rayScript.Setup(corner);
+
                 //import each object
                 foreach (var obj in objs)
                 {
