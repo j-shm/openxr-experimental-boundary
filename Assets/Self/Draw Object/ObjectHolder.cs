@@ -23,7 +23,7 @@ public class ObjectHolder : MonoBehaviour
         return objects;
     }
 
-    public void GetObjectsOfType(ObjectType.Object type)
+    public List<GameObject> GetObjectsOfType(ObjectType.Object type)
     {
         List<GameObject> objectsOfType = new List<GameObject>();
         for (int i = 0; i < objects.Count; i++)
