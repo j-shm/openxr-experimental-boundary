@@ -5,27 +5,35 @@ using UnityEngine;
 
 public class ObjectHolder : MonoBehaviour
 {
-
-    [Obsolete("This method is slow only use do not use on update!")]
-    public void GetObjects()
+    private List<GameObject> objects = new List<GameObject>();
+    private void OnTransformChildrenChanged()
     {
-        List<GameObject> objects = new List<GameObject>();
-        for (int i = 0; i < transform.childCount; i++) {
-            objects.Add(transform.GetChild(i).gameObject);
-        }
+        objects = GetObjectsFromChildren();
     }
-    [Obsolete("This method is slow only use do not use on update!")]
+    private List<GameObject> GetObjectsFromChildren()
+    {
+        List<GameObject> transformChildren = new List<GameObject>();
+        for (int i = 0; i < transform.childCount; i++) {
+            transformChildren.Add(transform.GetChild(i).gameObject);
+        }
+        return transformChildren;
+    }
+    private List<GameObject> GetObjects()
+    {
+        return objects;
+    }
+
     public void GetObjectsOfType(ObjectType.Object type)
     {
-        List<GameObject> objects = new List<GameObject>();
-        for (int i = 0; i < transform.childCount; i++)
+        List<GameObject> objectsOfType = new List<GameObject>();
+        for (int i = 0; i < objects.Count; i++)
         {
-            GameObject child = transform.GetChild(i).gameObject;
-            if(child.GetComponent<ObjectData>().objectType == type)
+            if(objects[i].GetComponent<ObjectData>().objectType == type)
             {
-                objects.Add(child);
+                objectsOfType.Add(objects[i]);
             }
         }
+        return objectsOfType;
     }
 
 }
