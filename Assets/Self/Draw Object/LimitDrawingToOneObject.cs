@@ -41,6 +41,11 @@ public class LimitDrawingToOneObject : MonoBehaviour
     }
     private void Deselect(SelectExitEventArgs args)
     {
+        StartCoroutine(DoDeselect());
+    }
+    private IEnumerator DoDeselect()
+    {
+        yield return new WaitForSeconds(1f);
         for (int i = 0; i < rayInteractorsVisuals.Count; i++)
         {
             rayInteractorsVisuals[i].enabled = true;

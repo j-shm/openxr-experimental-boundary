@@ -14,6 +14,7 @@ public class DrawObject : MonoBehaviour
     }
     public void ResizeObject(GameObject obj, float amount, Vector3 direction)
     {
+        /*
         if(direction == Vector3.up || direction == Vector3.down)
         {
             Resize(obj, obj.transform.localScale.y, Vector3.down);
@@ -24,6 +25,7 @@ public class DrawObject : MonoBehaviour
         {
             Resize(obj, obj.transform.localScale.z, Vector3.back);
         }
+        */
         Resize(obj, amount, direction);
     }
     public void ResizeObject(GameObject placedObject, Vector3 spawnPoint, Vector3 maxPoint, Vector3 addPoint)
