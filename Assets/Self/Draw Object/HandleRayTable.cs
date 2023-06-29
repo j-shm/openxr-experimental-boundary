@@ -104,7 +104,9 @@ public class HandleRayTable : MonoBehaviour
             }
             /* clean up: remove all the object references and get ready for the next one*/
             objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
-            placedObject.GetComponent<ObjectData>().placed = true;
+            ObjectData objData = placedObject.GetComponent<ObjectData>();
+            objData.placed = true;
+            objData.objectType = ObjectType.Object.Table;
             CleanUp();
         }
     }

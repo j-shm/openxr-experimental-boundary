@@ -5,4 +5,5 @@ using UnityEngine;
 public class ObjectData : MonoBehaviour
 {
     public bool placed = false;
+    public ObjectType.Object objectType;
 }
