@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4202994489672518590}
   - component: {fileID: 6683972498714641986}
   - component: {fileID: 2977540443074398460}
+  - component: {fileID: 8461855254264026367}
   m_Layer: 0
   m_Name: Corner
   m_TagString: Corner
@@ -277,3 +278,15 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &8461855254264026367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822946751231244869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb819c85e6cd4948b0ffc81089cddd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
