@@ -26,35 +26,7 @@ The following and their dependencies are required for the project:
 | Drawing Objects   	| ✔️              	|
 | Deleting Objects  	| ✔️              	|
 | Modifying Objects 	| ✔️              	|
-| Object Tags       	| ❌              	|
+| Object Tags       	| 🚧              	|
 | User Interface    	| ❌              	|
 | SDK for getting objects    	| ❌              	|
 | Passthrough    	| ❌              	|
-
-## Overview of the system
-
-The user first selects a corner then after they select a corner they then select a new point on the floor this spawns a selector which adjusts for the height of the object once this is put to the correct height the user deselects this and then picks the final point to draw the cuboid. 
-
-```
-                    ┌─────────────────────────────────┐
-                    │                                 │
-                    │        HandleRayTable.cs        │
-                    │                ▲                │
-                    │                │                │
-                    │        ┌───────┤                │
-                    │  spawns│       │                │
-                    │        │       ▼                │spawns
-                    │        │  DrawObject.cs         │
-                    ▼        │                        │
-       ┌────────►object ◄────┘                        │
-       │         │ │                                  │
-       │         │ └───────────►SaveObjects.cs        │
-deletes│         │                    │               │          starts
-       ├─────────objectdata.cs        │         LoadObjects.cs◄──────────FindAndStartSave.cs
-       │  needs                       │               ▲
-       │                  Serialises  │               │
-   DeleteObject.cs              into  │      ┌────────┴──────┐
-                                      ▼      │               │
-                                SerialObject.cs ◄───────────SerialObjects.cs
-                                                 stores
- ```
