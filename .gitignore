@@ -79,5 +79,9 @@ crashlytics-build.properties
 /[Aa]ssets/XRI/
 /[Aa]ssets/Samples/
 
+# Random Models and such that we use for testing
+/[Aa]ssets/Models/
+/[Aa]ssets/Models.meta
+
 # VS STUFF
 .vsconfig
