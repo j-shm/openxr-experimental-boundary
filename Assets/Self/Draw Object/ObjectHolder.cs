@@ -18,7 +18,7 @@ public class ObjectHolder : MonoBehaviour
         }
         return transformChildren;
     }
-    private List<GameObject> GetObjects()
+    public List<GameObject> GetObjects()
     {
         return objects;
     }
