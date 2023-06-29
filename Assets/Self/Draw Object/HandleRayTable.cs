@@ -41,13 +41,14 @@ public class HandleRayTable : MonoBehaviour
 
     //other
     private Vector3 startingPoint;
-    
+
     private void Start()
-    {   
+    {
         rayInteractor = GetComponent<XRRayInteractor>();
         man = rayInteractor.interactionManager;
         objectDrawer = GetComponent<DrawObject>();
     }
+    
     protected virtual void exited(SelectExitEventArgs args) => Deselect(args);
 
 

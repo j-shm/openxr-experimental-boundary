@@ -109,22 +109,20 @@ public class ModifyExistingObject : MonoBehaviour
         }
         return Vector3.Scale(dir, new Vector3(Mathf.Sign(point.z), Mathf.Sign(point.y), Mathf.Sign(point.z)));
     }
+    
     private float FloatFromVector(Vector3 point, Vector3 direction)
     {
         Vector3 multipliedPoint = Vector3.Scale(point , direction);
         if(multipliedPoint.x != 0)
         {
-            Debug.Log("x");
             return multipliedPoint.x;
         }
         if (multipliedPoint.y != 0)
         {
-            Debug.Log("y");
             return multipliedPoint.y;
         }
         if (multipliedPoint.z != 0)
         {
-            Debug.Log("z");
             return multipliedPoint.z;
         }
         return 0;
