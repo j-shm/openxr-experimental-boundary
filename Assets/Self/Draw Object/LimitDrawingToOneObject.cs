@@ -17,7 +17,7 @@ public class LimitDrawingToOneObject : MonoBehaviour
             GameObject rayObject = rayInteractor.gameObject;
             rayInteractorsVisuals.Add(rayObject.GetComponent<XRInteractorLineVisual>());
             rayInteractorsGameObjects.Add(rayObject);
-            if(rayObject.name != "Ground For Thingy") //this needs fixed to a tag or smth
+            if(rayObject.name != "Ground For Thingy" && rayObject.name != "Expand Ray Interactor") //this needs fixed to a tag or smth
             {
                 rayInteractor.selectEntered.AddListener(selected);
                 rayInteractor.selectExited.AddListener(exited);
@@ -29,18 +29,22 @@ public class LimitDrawingToOneObject : MonoBehaviour
     protected virtual void exited(SelectExitEventArgs args) => Deselect(args);
     private void Select(SelectEnterEventArgs args)
     {
+        GameObject obj = args.interactorObject.transform.gameObject;
         for (int i =0; i < rayInteractorsVisuals.Count; i++)
         {
-            rayInteractorsVisuals[i].enabled = false;
-            Debug.Log(rayInteractorsVisuals[i].gameObject.name);
+            if(rayInteractorsVisuals[i].gameObject != obj)
+            {
+                rayInteractorsVisuals[i].enabled = false;
+                rayInteractors[i].allowSelect = false;
+            }
         }
-        rayInteractorsVisuals[rayInteractorsGameObjects.IndexOf(args.interactorObject.transform.gameObject)].enabled = true;
     }
     private void Deselect(SelectExitEventArgs args)
     {
         for (int i = 0; i < rayInteractorsVisuals.Count; i++)
         {
             rayInteractorsVisuals[i].enabled = true;
+            rayInteractors[i].allowSelect = true;
         }
     }
 }
