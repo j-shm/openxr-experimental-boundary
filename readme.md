@@ -28,5 +28,5 @@ The following and their dependencies are required for the project:
 | Modifying Objects 	| ✔️              	|
 | Object Tags       	| 🚧              	|
 | User Interface    	| ❌              	|
-| SDK for getting objects    	| ❌              	|
+| SDK for getting objects    	| ✔️              	|
 | Passthrough    	| ❌              	|
