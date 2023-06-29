@@ -92,12 +92,8 @@ public class HandleRayTable : MonoBehaviour
                 spawnedSelector = Instantiate(selector, startingPoint, Quaternion.identity);
                 var spawnedSelectorGrabComp = spawnedSelector.GetComponent<XRGrabInteractable>();
 
-                /* 
-                 * this is used to force the main ray interactor to pick up the spawnedSelecter that we use to find the height
-                 * there should be a way to get IXRSelectInteractor instead of this obselete method of base interactors however i cannot find how to get the
-                 * interactor portion only the interactable so this will have to do.
-                 */
-                man.SelectEnter(objectRayInteractor, spawnedSelectorGrabComp);
+                //force pickup
+                man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
 
                 //add listener for when the height has been selected by the user deselecting the item
                 spawnedSelectorGrabComp.selectExited.AddListener(exited); 

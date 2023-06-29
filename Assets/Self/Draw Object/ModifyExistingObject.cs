@@ -72,7 +72,7 @@ public class ModifyExistingObject : MonoBehaviour
             selector = Instantiate(selectorToSpawn, res.point, Quaternion.identity);
             
             var spawnedSelectorGrabComp = selector.GetComponent<XRGrabInteractable>();
-            man.SelectEnter(objectRayInteractor, spawnedSelectorGrabComp);
+            man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
             spawnedSelectorGrabComp.selectExited.AddListener(exited);
             selector.transform.SetParent(objSelected.transform, true);
             dirToScale = FindLargestDirection(selector.transform.localPosition);
