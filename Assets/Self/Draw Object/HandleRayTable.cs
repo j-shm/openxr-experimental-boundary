@@ -26,7 +26,6 @@ public class HandleRayTable : MonoBehaviour
     private GameObject selector;
 
     private GameObject spawnedSelector;
-    private LineRenderer spawnedSelectorLineRenderer;
 
     //the actual object
     [SerializeField]
