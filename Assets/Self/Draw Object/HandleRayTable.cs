@@ -70,11 +70,7 @@ public class HandleRayTable : MonoBehaviour
     }
     public void Select()
     {
-        //object ray is busy holding something else
-        if (objectRayInteractor.interactablesSelected.Count != 0)
-        {
-            return;
-        }
+        Debug.Log("Selecting");
 
         RaycastHit res;
         if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
@@ -92,6 +88,9 @@ public class HandleRayTable : MonoBehaviour
                 var spawnedSelectorGrabComp = spawnedSelector.GetComponent<XRGrabInteractable>();
 
                 //force pickup
+                if(objectRayInteractor == rayInteractor) {
+                    man.SelectExit((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
+                }
                 man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
 
                 //add listener for when the height has been selected by the user deselecting the item
