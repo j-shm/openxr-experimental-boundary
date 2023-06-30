@@ -85,3 +85,4 @@ crashlytics-build.properties
 
 # VS STUFF
 .vsconfig
+.vscode/
