@@ -39,7 +39,10 @@ public class HandleRayTable : MonoBehaviour
     private GameObject corner;
 
     //other
+    [SerializeField]
+    private UserInterfaceHandler uiHandler;
     private Vector3 startingPoint;
+    
 
     private void Start()
     {
@@ -54,6 +57,7 @@ public class HandleRayTable : MonoBehaviour
     //we have picked a height now we will spawn the object
     private void Deselect(SelectExitEventArgs args)
     {
+        uiHandler.NextStage();
         placedObject = Instantiate(objToPlace, startingPoint, Quaternion.identity);
     }
     private void Update()
@@ -82,6 +86,7 @@ public class HandleRayTable : MonoBehaviour
             if(corner == null)
             {
                 corner = Instantiate(cornerToPlace, res.point, Quaternion.identity);
+                uiHandler.NextStage();
                 return;
             }
             if (spawnedSelector == null)
@@ -95,21 +100,23 @@ public class HandleRayTable : MonoBehaviour
                 man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
 
                 //add listener for when the height has been selected by the user deselecting the item
-                spawnedSelectorGrabComp.selectExited.AddListener(exited); 
+                spawnedSelectorGrabComp.selectExited.AddListener(exited);
+                uiHandler.NextStage();
                 return;
             }
             /* clean up: remove all the object references and get ready for the next one*/
             objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
             ObjectData objData = placedObject.GetComponent<ObjectData>();
             objData.placed = true;
-            objData.objectType = ObjectType.Object.Table;
+            objData.objectType = uiHandler.GetObjectType();
             CleanUp();
         }
     }
 
     private void CleanUp()
     {
-        if(spawnedSelector != null)
+        uiHandler.ResetStage();
+        if (spawnedSelector != null)
         {
             Destroy(spawnedSelector);
             spawnedSelector = null;
