@@ -124,6 +124,7 @@ public class HandleRayTable : MonoBehaviour
 
         if(placedObject != null)
         {
+            placedObject.GetComponent<Collider>().enabled = true;
             if(corner != null)
             {
                 placedObject.transform.SetParent(corner.transform, true);
