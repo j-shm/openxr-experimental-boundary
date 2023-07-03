@@ -81,6 +81,10 @@ crashlytics-build.properties
 /[Aa]ssets/Models/
 /[Aa]ssets/Models.meta
 
+# Text Mesh Pro
+/[Aa]ssets/TextMesh Pro
+/[Aa]ssets/TextMesh Pro.meta
+
 # VS STUFF
 .vsconfig
 .vscode/
