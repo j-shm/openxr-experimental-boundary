@@ -20,9 +20,7 @@ public class UserInterfaceHandler : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown dropDown;
     [SerializeField]
-    private GameObject loadButton;
-    [SerializeField]
-    private GameObject saveButton;
+    private GameObject[] buttons;
     private ObjectType.Object objType;
 
     private void Start()
@@ -62,14 +60,18 @@ public class UserInterfaceHandler : MonoBehaviour
         if (stage == 1)
         {
             dropDown.gameObject.SetActive(true);
-            loadButton.SetActive(true);
-            saveButton.SetActive(true);
+            foreach(GameObject button in buttons)
+            {
+                button.SetActive(true);
+            }
         }
         else
         {
             dropDown.gameObject.SetActive(false);
-            loadButton.SetActive(false);
-            saveButton.SetActive(false);
+            foreach (GameObject button in buttons)
+            {
+                button.SetActive(false);
+            }
         }
     }
     private void SetText()
