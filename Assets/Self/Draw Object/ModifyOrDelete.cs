@@ -12,6 +12,7 @@ public class ModifyOrDelete : MonoBehaviour
     private void Start()
     {
         infoText = this.GetComponentInChildren<Text>();
+        DeleteRay.SetActive(false);
         Change();
     }
 
