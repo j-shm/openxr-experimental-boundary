@@ -41,6 +41,7 @@ public class ModifyExistingObject : MonoBehaviour
             Debug.Log("we're getting to the selected part!");
             objSelected = args.interactableObject.transform.gameObject;
             objSelectedParent = objSelected.transform.parent;
+            objSelected.transform.SetParent(null, true);
             Main();
         }
     }
@@ -78,8 +79,10 @@ public class ModifyExistingObject : MonoBehaviour
             dirToScale = FindLargestDirection(selector.transform.localPosition);
             selector.transform.SetParent(null, true);
             Rigidbody selRB = selector.GetComponent<Rigidbody>();
-            Debug.DrawRay(objSelected.transform.position, dirToScale); 
-            if(dirToScale.x == 0)
+            Debug.DrawRay(objSelected.transform.position, dirToScale*100);
+            Debug.DrawRay(selector.transform.position, dirToScale*100);
+            Debug.Log(dirToScale);
+            if (dirToScale.x == 0)
             {
                 selRB.constraints = RigidbodyConstraints.FreezePositionX;
             }
@@ -91,7 +94,6 @@ public class ModifyExistingObject : MonoBehaviour
             {
                 selRB.constraints = RigidbodyConstraints.FreezePositionZ;
             }
-            objSelected.transform.SetParent(null, true);
         }
     }
     private Vector3 FindLargestDirection(Vector3 point)
