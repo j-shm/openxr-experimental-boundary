@@ -7,7 +7,9 @@ The main focus is to allow this to be used on any openxr setup therefore proprie
 The following and their dependencies are required for the project:
 - [Unity](https://unity.com/) (Made on 2021.3.27f1)
 - [Newtonsoft Json](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@2.0/manual/index.html) 
-- [XR Interaction Toolkit](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@2.3/manual/index.html)
+- [XR Interaction Toolkit](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@2.3/manual/index.html) + sample assets
+
+These should be installed when you open this unity project apart from sample assets.
 
 | Headset           	| Supported ✔️❌🤔 	|
 |-------------------	|----------------	|
