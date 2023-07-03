@@ -13,7 +13,7 @@ These should be installed when you open this unity project apart from sample ass
 
 | Headset           	| Supported ✔️❌🤔 	|
 |-------------------	|----------------	|
-| Quest 2 / Quest Pro    	| 🤔              	|
+| Quest 2 / Quest Pro    	| ✔️              	|
 | Pico 4  	| 🤔              	|
 | Htc Vive / Cosmos 	| ✔️              	|
 | Index       	| ✔️              	|
@@ -28,7 +28,7 @@ These should be installed when you open this unity project apart from sample ass
 | Drawing Objects   	| ✔️              	|
 | Deleting Objects  	| ✔️              	|
 | Modifying Objects 	| ✔️              	|
-| Object Tags       	| 🚧              	|
-| User Interface    	| ❌              	|
+| Object Tags       	| ✔️              	|
+| User Interface    	| ✔️              	|
 | SDK for getting objects    	| ✔️              	|
 | Passthrough    	| ❌              	|
