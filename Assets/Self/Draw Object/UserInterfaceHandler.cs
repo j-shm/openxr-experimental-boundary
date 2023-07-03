@@ -59,10 +59,10 @@ public class UserInterfaceHandler : MonoBehaviour
         modalTextComp.text = modalText[stage];
         if (stage == 1)
         {
-            dropDown.enabled = true;
+            dropDown.gameObject.SetActive(true);
         } else
         {
-            dropDown.enabled = false;
+            dropDown.gameObject.SetActive(false);
         }
     }
 }
