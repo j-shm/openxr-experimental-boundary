@@ -19,6 +19,10 @@ public class UserInterfaceHandler : MonoBehaviour
     private TextMeshProUGUI modalTextComp;
     [SerializeField]
     private TMP_Dropdown dropDown;
+    [SerializeField]
+    private GameObject loadButton;
+    [SerializeField]
+    private GameObject saveButton;
     private ObjectType.Object objType;
 
     private void Start()
@@ -53,16 +57,25 @@ public class UserInterfaceHandler : MonoBehaviour
         this.stage = stage;
         SetText();
     }
+    private void SetButtonStates()
+    {
+        if (stage == 1)
+        {
+            dropDown.gameObject.SetActive(true);
+            loadButton.SetActive(true);
+            saveButton.SetActive(true);
+        }
+        else
+        {
+            dropDown.gameObject.SetActive(false);
+            loadButton.SetActive(false);
+            saveButton.SetActive(true);
+        }
+    }
     private void SetText()
     {
         headerTextComp.text = headerText[stage];
         modalTextComp.text = modalText[stage];
-        if (stage == 1)
-        {
-            dropDown.gameObject.SetActive(true);
-        } else
-        {
-            dropDown.gameObject.SetActive(false);
-        }
+        SetButtonStates();
     }
 }
