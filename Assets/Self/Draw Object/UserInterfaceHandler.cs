@@ -69,7 +69,7 @@ public class UserInterfaceHandler : MonoBehaviour
         {
             dropDown.gameObject.SetActive(false);
             loadButton.SetActive(false);
-            saveButton.SetActive(true);
+            saveButton.SetActive(false);
         }
     }
     private void SetText()
