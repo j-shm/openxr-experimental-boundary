@@ -12,8 +12,6 @@ public class LoadObjects : MonoBehaviour
     private GameObject corner;
     [SerializeField]
     private GameObject objectToPlace;
-    [SerializeField]
-    private HandleRayTable rayScript;
     public void Load(string save = null)
     {
         if(save == null)
@@ -32,7 +30,8 @@ public class LoadObjects : MonoBehaviour
         Debug.LogError($"no save found! For: {save}");
 
     }
-    
+    public delegate void OnLoad(GameObject corner);
+    public OnLoad onLoad;
     private string CheckSaveExists(string saveName = null)
     {
         if (saveName == null)
@@ -50,16 +49,6 @@ public class LoadObjects : MonoBehaviour
     {
         if (System.IO.File.Exists(file))
         {
-            if(rayScript == null)
-            {
-                rayScript = FindAnyObjectByType<HandleRayTable>();
-            }
-           
-            if(rayScript != null)
-            {
-                rayScript.FullCleanUp();
-            }
-
             try
             {
 
@@ -70,8 +59,8 @@ public class LoadObjects : MonoBehaviour
                 corner = Instantiate(cornerToPlace,ArrayToVector(cornerPos),Quaternion.identity);
 
                 var objs = o1["objects"];
-                rayScript.Setup(corner);
 
+                onLoad?.Invoke(corner);
                 //import each object
                 foreach (var obj in objs)
                 {

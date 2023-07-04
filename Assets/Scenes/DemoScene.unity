@@ -2841,7 +2841,6 @@ MonoBehaviour:
     type: 3}
   objectToPlace: {fileID: 5997841491947964950, guid: b17d813f555b1b54584c6718f3a16854,
     type: 3}
-  rayScript: {fileID: 1204261800}
 --- !u!1 &1201109045
 GameObject:
   m_ObjectHideFlags: 0
@@ -3488,6 +3487,19 @@ MonoBehaviour:
     m_Reference: {fileID: 7779212132400271959, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!114 &1204261818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204261799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9900c715101cf48b258295a64dfc6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadObjects: {fileID: 1874892189}
 --- !u!1 &1251698981
 GameObject:
   m_ObjectHideFlags: 0
@@ -5988,7 +6000,6 @@ MonoBehaviour:
     type: 3}
   objectToPlace: {fileID: 5997841491947964950, guid: b17d813f555b1b54584c6718f3a16854,
     type: 3}
-  rayScript: {fileID: 1204261800}
 --- !u!223 &1874892190
 Canvas:
   m_ObjectHideFlags: 0
