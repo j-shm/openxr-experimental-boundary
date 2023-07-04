@@ -81,6 +81,7 @@ public class LoadObjects : MonoBehaviour
                         objPlaced.transform.localScale = ArrayToVector(objScale);
                         objPlaced.transform.localPosition = ArrayToVector(objPos);
                         objPlaced.GetComponent<ObjectData>().placed = true;
+                        objPlaced.GetComponent<Collider>().enabled = true;
                     }
 
                 }
