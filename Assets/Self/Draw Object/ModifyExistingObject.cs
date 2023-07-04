@@ -47,7 +47,11 @@ public class ModifyExistingObject : MonoBehaviour
     }
     private void Deselect(SelectExitEventArgs args)
     {
-        resizer.ResizeObject(objSelected, FloatFromVector(selector.transform.position - objSelected.transform.position, dirToScale), dirToScale);
+        resizer.ResizeObject(objSelected, FloatFromVector(objSelected.transform.localScale, dirToScale), dirToScale);
+        resizer.ResizeObject(objSelected,
+            FloatFromVector(objSelected.transform.position - selector.transform.position,
+                GetAbsoluteDirection(dirToScale)),
+            dirToScale);
         Destroy(selector);
         objSelected.transform.SetParent(objSelectedParent, true);
         objSelectedParent = null;
@@ -60,7 +64,11 @@ public class ModifyExistingObject : MonoBehaviour
 
         if (selector != null)
         {
-            resizer.ResizeObject(objSelected, FloatFromVector(selector.transform.position - objSelected.transform.position, dirToScale), dirToScale);
+            resizer.ResizeObject(objSelected, FloatFromVector(objSelected.transform.localScale, dirToScale), dirToScale);
+            resizer.ResizeObject(objSelected,
+                FloatFromVector(objSelected.transform.position - selector.transform.position,
+                    GetAbsoluteDirection(dirToScale)),
+                dirToScale);
         }
     }
     protected virtual void selected(SelectEnterEventArgs args) => Select(args);
@@ -118,16 +126,20 @@ public class ModifyExistingObject : MonoBehaviour
         Vector3 multipliedPoint = Vector3.Scale(point , direction);
         if(multipliedPoint.x != 0)
         {
-            return multipliedPoint.x;
+            return point.x;
         }
         if (multipliedPoint.y != 0)
         {
-            return multipliedPoint.y;
+            return point.y;
         }
         if (multipliedPoint.z != 0)
         {
-            return multipliedPoint.z;
+            return point.z;
         }
         return 0;
+    }
+    private Vector3 GetAbsoluteDirection(Vector3 direction)
+    {
+        return new Vector3(Mathf.Abs(direction.x), Mathf.Abs(direction.y), Mathf.Abs(direction.z));
     }
 }
