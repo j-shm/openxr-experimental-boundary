@@ -35,7 +35,10 @@ public class LoadObjects : MonoBehaviour
     
     private string CheckSaveExists(string saveName = null)
     {
-        saveName = "roomscaleObjects.json";
+        if (saveName == null)
+        {
+            saveName = "roomscaleObjects.json";
+        }
         string savePath = Application.persistentDataPath + "/saves/";
         if (File.Exists(savePath + saveName))
         {

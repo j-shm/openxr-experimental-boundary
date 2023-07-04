@@ -25,9 +25,12 @@ public class SaveObjects : MonoBehaviour
         }
     }
 
-    private string GetSavePath(string saveName = null)
+    private string GetSavePath(string saveName = null,bool overwrite = true)
     {
-        saveName = "roomscaleObjects.json";
+        if(saveName == null)
+        {
+            saveName = "roomscaleObjects.json";
+        }
         string savePath = Application.persistentDataPath + "/saves/";
         if (!Directory.Exists(savePath))
         {
@@ -35,6 +38,10 @@ public class SaveObjects : MonoBehaviour
         }
         if (File.Exists(savePath + saveName))
         {
+            if(!overwrite)
+            {
+                return "";
+            }
             File.Delete(savePath + saveName);
         }
         return savePath + saveName;
