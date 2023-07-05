@@ -124,6 +124,7 @@ public class HandleRayTable : MonoBehaviour
 
         if(placedObject != null)
         {
+            placedObject.transform.localScale = GetAbsoluteVector(placedObject.transform.localScale);
             placedObject.GetComponent<Collider>().enabled = true;
             if(corner != null)
             {
@@ -132,6 +133,10 @@ public class HandleRayTable : MonoBehaviour
             placedObject = null;
         }
 
+    }
+    private Vector3 GetAbsoluteVector(Vector3 vector)
+    {
+        return new Vector3(Mathf.Abs(vector.x), Mathf.Abs(vector.y), Mathf.Abs(vector.z));
     }
 
     //used for the loading system

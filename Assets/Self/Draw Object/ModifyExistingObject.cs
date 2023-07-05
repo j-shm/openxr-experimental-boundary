@@ -21,6 +21,9 @@ public class ModifyExistingObject : MonoBehaviour
     private DrawObject resizer;
 
     private Vector3 dirToScale;
+    private float initalScale;
+    private GameObject pivot;
+    private MeshCollider objSelectedMeshRend;
     void Start()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
@@ -47,28 +50,29 @@ public class ModifyExistingObject : MonoBehaviour
     }
     private void Deselect(SelectExitEventArgs args)
     {
-        resizer.ResizeObject(objSelected, FloatFromVector(objSelected.transform.localScale, dirToScale), dirToScale);
-        resizer.ResizeObject(objSelected,
-            FloatFromVector(objSelected.transform.position - selector.transform.position,
-                GetAbsoluteDirection(dirToScale)),
-            dirToScale);
+        Resize();
         Destroy(selector);
         objSelected.transform.SetParent(objSelectedParent, true);
+        objSelected.transform.localScale = GetAbsoluteDirection(objSelected.transform.localScale);
         objSelectedParent = null;
         objSelected = null;
         selector = null;
+        Destroy(pivot);
+        pivot = null;
+        objSelectedMeshRend = null;
+
         
+    }
+    private void Resize()
+    {
+        pivot.transform.localScale = MakeVectorBaseOne(Vector3.Scale(-dirToScale, selector.transform.position - pivot.transform.position) / FloatFromVector(objSelected.transform.localScale, dirToScale));
     }
     private void Update()
     {
 
         if (selector != null)
         {
-            resizer.ResizeObject(objSelected, FloatFromVector(objSelected.transform.localScale, dirToScale), dirToScale);
-            resizer.ResizeObject(objSelected,
-                FloatFromVector(objSelected.transform.position - selector.transform.position,
-                    GetAbsoluteDirection(dirToScale)),
-                dirToScale);
+            Resize();
         }
     }
     protected virtual void selected(SelectEnterEventArgs args) => Select(args);
@@ -83,13 +87,24 @@ public class ModifyExistingObject : MonoBehaviour
             var spawnedSelectorGrabComp = selector.GetComponent<XRGrabInteractable>();
             man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
             spawnedSelectorGrabComp.selectExited.AddListener(exited);
+            var gkjfdgjkdfg = new GameObject("LOOK HERE!!");
+            gkjfdgjkdfg.transform.position = res.point;
+            gkjfdgjkdfg.transform.SetParent(objSelected.transform,true);
             selector.transform.SetParent(objSelected.transform, true);
             dirToScale = FindLargestDirection(selector.transform.localPosition);
             selector.transform.SetParent(null, true);
             Rigidbody selRB = selector.GetComponent<Rigidbody>();
-            Debug.DrawRay(objSelected.transform.position, dirToScale*100);
-            Debug.DrawRay(selector.transform.position, dirToScale*100);
-            Debug.Log(dirToScale);
+            initalScale = Mathf.Sign(FloatFromVector(objSelected.transform.localScale, dirToScale));
+            pivot = new GameObject("Pivot");
+            objSelectedMeshRend = objSelected.GetComponent<MeshCollider>();
+            Vector3 absDir = GetAbsoluteDirection(dirToScale);
+            int dirSign = (int)Mathf.Sign(FloatFromVector(dirToScale, dirToScale));
+            float extent = FloatFromVector(objSelectedMeshRend.bounds.extents, dirToScale);
+            pivot.transform.position = objSelected.transform.position;
+            objSelected.transform.SetParent(pivot.transform);
+            pivot.transform.position += dirToScale * extent;
+            objSelected.transform.localPosition += -dirToScale * extent;
+
             if (dirToScale.x == 0)
             {
                 selRB.constraints = RigidbodyConstraints.FreezePositionX;
@@ -141,5 +156,21 @@ public class ModifyExistingObject : MonoBehaviour
     private Vector3 GetAbsoluteDirection(Vector3 direction)
     {
         return new Vector3(Mathf.Abs(direction.x), Mathf.Abs(direction.y), Mathf.Abs(direction.z));
+    }
+    private Vector3 MakeVectorBaseOne(Vector3 vector)
+    {
+        if (vector.x != 0)
+        {
+            return new Vector3(vector.x, 1, 1);
+        }
+        if (vector.y != 0)
+        {
+            return new Vector3(1, vector.y, 1);
+        }
+        if (vector.z != 0)
+        {
+            return new Vector3(1, 1, vector.z);
+        }
+        return vector;
     }
 }
