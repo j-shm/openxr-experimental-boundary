@@ -60,7 +60,7 @@ public class LoadObjects : MonoBehaviour
             saveName = "roomscaleObjects.json";
         }
         string savePath = "";
-        if(isFullFilePath)
+        if(!isFullFilePath)
         {
             savePath = $"{Application.persistentDataPath}/saves/";
         }
