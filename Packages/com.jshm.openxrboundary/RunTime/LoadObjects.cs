@@ -13,7 +13,10 @@ public class LoadObjects : MonoBehaviour
     private GameObject corner;
     [SerializeField]
     private GameObject objectToPlace;
-
+    [SerializeField]
+    private Material occul;
+    [SerializeField]
+    private bool useOccul;
     /// <summary>
     /// This method is the entry for the <c>LoadObjects</c> class it calls 
     /// other methods that are needed to load and place objects
@@ -99,6 +102,10 @@ public class LoadObjects : MonoBehaviour
                         objPlaced.transform.localPosition = ArrayToVector(objPos);
                         objPlaced.GetComponent<ObjectData>().placed = true;
                         objPlaced.GetComponent<Collider>().enabled = true;
+                        if(useOccul && occul != null)
+                        {
+                            objPlaced.GetComponent<Renderer>().material = occul;
+                        }
                     }
 
                 }
