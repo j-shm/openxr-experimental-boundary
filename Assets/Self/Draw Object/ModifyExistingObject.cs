@@ -29,7 +29,6 @@ public class ModifyExistingObject : MonoBehaviour
         rayInteractor = GetComponent<XRRayInteractor>();
         man = rayInteractor.interactionManager;
         rayInteractor.selectEntered.AddListener(selected);
-        resizer = GetComponent<DrawObject>();
     }
     private void Select(SelectEnterEventArgs args)
     {
