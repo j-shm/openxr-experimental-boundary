@@ -23,7 +23,7 @@ public class ModifyExistingObject : MonoBehaviour
     private Vector3 dirToScale;
     private float initalScale;
     private GameObject pivot;
-    private MeshCollider objSelectedMeshRend;
+    private MeshCollider objSelectedMeshCol;
     void Start()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
@@ -59,7 +59,7 @@ public class ModifyExistingObject : MonoBehaviour
         selector = null;
         Destroy(pivot);
         pivot = null;
-        objSelectedMeshRend = null;
+        objSelectedMeshCol = null;
 
         
     }
@@ -96,15 +96,15 @@ public class ModifyExistingObject : MonoBehaviour
             Rigidbody selRB = selector.GetComponent<Rigidbody>();
             initalScale = Mathf.Sign(FloatFromVector(objSelected.transform.localScale, dirToScale));
             pivot = new GameObject("Pivot");
-            objSelectedMeshRend = objSelected.GetComponent<MeshCollider>();
+            objSelectedMeshCol = objSelected.GetComponent<MeshCollider>();
             Vector3 absDir = GetAbsoluteDirection(dirToScale);
             int dirSign = (int)Mathf.Sign(FloatFromVector(dirToScale, dirToScale));
-            float extent = FloatFromVector(objSelectedMeshRend.bounds.extents, dirToScale);
+            float extent = FloatFromVector(objSelectedMeshCol.bounds.extents, dirToScale);
             pivot.transform.position = objSelected.transform.position;
             objSelected.transform.SetParent(pivot.transform);
             pivot.transform.position += dirToScale * extent;
             objSelected.transform.localPosition += -dirToScale * extent;
-
+            Debug.Log("" + dirToScale);
             if (dirToScale.x == 0)
             {
                 selRB.constraints = RigidbodyConstraints.FreezePositionX;
@@ -133,7 +133,7 @@ public class ModifyExistingObject : MonoBehaviour
             largestPoint = Mathf.Abs(point.z);
             dir = Vector3.back;
         }
-        return Vector3.Scale(dir, new Vector3(Mathf.Sign(point.z), Mathf.Sign(point.y), Mathf.Sign(point.z)));
+        return Vector3.Scale(dir, new Vector3(Mathf.Sign(point.x), Mathf.Sign(point.y), Mathf.Sign(point.z)));
     }
     
     private float FloatFromVector(Vector3 point, Vector3 direction)
