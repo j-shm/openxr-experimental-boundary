@@ -89,3 +89,6 @@ crashlytics-build.properties
 .vsconfig
 .vscode/
 /Assets/Self/logo.png.meta
+/Packages/com.jshm.openxrboundary/Third Party Notices.md.meta
+/Packages/com.jshm.openxrboundary/README.md.meta
+*.meta

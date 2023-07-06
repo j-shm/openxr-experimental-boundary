@@ -33,7 +33,7 @@ public class LoadObjects : MonoBehaviour
     /// Bool of success
     /// </returns>
     /// </summary>
-    public bool Load(string save = null, bool isFullFilePath = false)
+    public bool Load(string save = null, bool isFullFilePath = true)
     {
         if(save == null || save == "")
         {
