@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 
+/// <summary>
+/// Class <c>LoadObjects</c> is used for loading a json of objects into the scene.
+/// </summary>
 public class LoadObjects : MonoBehaviour
 {
     [SerializeField]
@@ -12,13 +13,27 @@ public class LoadObjects : MonoBehaviour
     private GameObject corner;
     [SerializeField]
     private GameObject objectToPlace;
-    public void Load(string save = null)
+
+    /// <summary>
+    /// This method is the entry for the <c>LoadObjects</c> class it calls 
+    /// other methods that are needed to load and place objects
+    /// <param name="save">the save file.</param>
+    /// <param name="isFullFilePath">includes the directory or not.</param>
+    /// <example>
+    /// For example:
+    /// <code>
+    /// Load("C:/save.json",true)
+    /// </code>
+    /// Will load the file path C:/save.json
+    /// </example>
+    /// </summary>
+    public void Load(string save = null, bool isFullFilePath = false)
     {
-        if(save == null)
+        if(save == null || save == "")
         {
             save = "roomscaleObjects.json";
         }
-        string fullFilePath = CheckSaveExists(save);
+        string fullFilePath = CheckSaveExists(save, isFullFilePath);
         if (fullFilePath != "")
         {
             if(!Import(fullFilePath))
@@ -32,13 +47,17 @@ public class LoadObjects : MonoBehaviour
     }
     public delegate void OnLoad(GameObject corner);
     public OnLoad onLoad;
-    private string CheckSaveExists(string saveName = null)
+    private string CheckSaveExists(string saveName = null, bool isFullFilePath = false)
     {
         if (saveName == null)
         {
             saveName = "roomscaleObjects.json";
         }
-        string savePath = Application.persistentDataPath + "/saves/";
+        string savePath = "";
+        if(isFullFilePath)
+        {
+            savePath = Application.persistentDataPath + "/saves/";
+        }
         if (File.Exists(savePath + saveName))
         {
             return savePath + saveName;
