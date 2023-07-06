@@ -9,6 +9,8 @@ The following and their dependencies are required for the project:
 - [Newtonsoft Json](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@2.0/manual/index.html) 
 - [XR Interaction Toolkit](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@2.3/manual/index.html) + sample assets
 
+XR Interaction Toolkit is not nessacary if you are only using the package for loading already made boundaries in
+
 These should be installed when you open this unity project apart from sample assets.
 
 | Headset           	| Supported ✔️❌🤔 	|
