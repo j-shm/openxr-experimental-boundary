@@ -18,10 +18,10 @@ public class ModifyExistingObject : MonoBehaviour
     private GameObject objSelected;
     private Transform objSelectedParent;
 
-    private DrawObject resizer;
+
 
     private Vector3 dirToScale;
-    private float initalScale;
+
     private GameObject pivot;
     private MeshCollider objSelectedMeshCol;
     void Start()
@@ -37,11 +37,9 @@ public class ModifyExistingObject : MonoBehaviour
         {
             return;
         }
-        Debug.Log(args.interactableObject.transform.gameObject);
-        Debug.Log(args.interactableObject.transform.gameObject.GetComponent<ObjectData>());
+
         if (args.interactableObject.transform.gameObject.GetComponent<ObjectData>().placed)
         {
-            Debug.Log("we're getting to the selected part!");
             objSelected = args.interactableObject.transform.gameObject;
             objSelectedParent = objSelected.transform.parent;
             objSelected.transform.SetParent(null, true);
@@ -87,14 +85,10 @@ public class ModifyExistingObject : MonoBehaviour
             var spawnedSelectorGrabComp = selector.GetComponent<XRGrabInteractable>();
             man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
             spawnedSelectorGrabComp.selectExited.AddListener(exited);
-            var gkjfdgjkdfg = new GameObject("LOOK HERE!!");
-            gkjfdgjkdfg.transform.position = res.point;
-            gkjfdgjkdfg.transform.SetParent(objSelected.transform,true);
             selector.transform.SetParent(objSelected.transform, true);
             dirToScale = FindLargestDirection(selector.transform.localPosition);
             selector.transform.SetParent(null, true);
             Rigidbody selRB = selector.GetComponent<Rigidbody>();
-            initalScale = Mathf.Sign(FloatFromVector(objSelected.transform.localScale, dirToScale));
             pivot = new GameObject("Pivot");
             objSelectedMeshCol = objSelected.GetComponent<MeshCollider>();
             Vector3 absDir = GetAbsoluteDirection(dirToScale);
@@ -104,7 +98,6 @@ public class ModifyExistingObject : MonoBehaviour
             objSelected.transform.SetParent(pivot.transform);
             pivot.transform.position += dirToScale * extent;
             objSelected.transform.localPosition += -dirToScale * extent;
-            Debug.Log("" + dirToScale);
             if (dirToScale.x == 0)
             {
                 selRB.constraints = RigidbodyConstraints.FreezePositionX;
