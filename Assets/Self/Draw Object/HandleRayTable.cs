@@ -68,6 +68,7 @@ public class HandleRayTable : MonoBehaviour
             RaycastHit res;
             if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
             {
+                if (res.point.y < startingPoint.y) return;
                 objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
             }
         }
@@ -95,7 +96,7 @@ public class HandleRayTable : MonoBehaviour
 
                 spawnedSelector = Instantiate(selector, startingPoint, Quaternion.identity);
                 var spawnedSelectorGrabComp = spawnedSelector.GetComponent<XRGrabInteractable>();
-
+                spawnedSelector.GetComponent<DrawLineToPoint>().SetPoint(startingPoint);
                 //force pickup
                 man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
 
@@ -104,6 +105,7 @@ public class HandleRayTable : MonoBehaviour
                 uiHandler.NextStage();
                 return;
             }
+            if (res.point.y < startingPoint.y) return;
             /* clean up: remove all the object references and get ready for the next one*/
             objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
             ObjectData objData = placedObject.GetComponent<ObjectData>();
