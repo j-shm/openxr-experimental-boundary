@@ -27,7 +27,7 @@ public class LoadObjects : MonoBehaviour
     /// Will load the file path C:/save.json
     /// </example>
     /// </summary>
-    public void Load(string save = null, bool isFullFilePath = false)
+    public bool Load(string save = null, bool isFullFilePath = false)
     {
         if(save == null || save == "")
         {
@@ -36,13 +36,15 @@ public class LoadObjects : MonoBehaviour
         string fullFilePath = CheckSaveExists(save, isFullFilePath);
         if (fullFilePath != "")
         {
-            if(!Import(fullFilePath))
+            if(Import(fullFilePath))
             {
-                Debug.Log("loading failed :(");
+                return true;
             }
-            return;
+            Debug.LogError($"error importing! For: {save}")
+            return false;
         }
         Debug.LogError($"no save found! For: {save}");
+        return false;
 
     }
     public delegate void OnLoad(GameObject corner);
@@ -56,7 +58,7 @@ public class LoadObjects : MonoBehaviour
         string savePath = "";
         if(isFullFilePath)
         {
-            savePath = Application.persistentDataPath + "/saves/";
+            savePath = $"{Application.persistentDataPath}/saves/";
         }
         if (File.Exists(savePath + saveName))
         {
