@@ -85,6 +85,11 @@ crashlytics-build.properties
 /[Aa]ssets/TextMesh Pro
 /[Aa]ssets/TextMesh Pro.meta
 
+#Oculus Integration
+/[Aa]ssets/Oculus/
+
+/[Aa]ssets/Resources/
+
 # VS STUFF
 .vsconfig
 .vscode/
