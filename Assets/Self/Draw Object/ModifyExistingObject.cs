@@ -18,15 +18,17 @@ public class ModifyExistingObject : MonoBehaviour
     private GameObject objSelected;
     private Transform objSelectedParent;
 
-    private DrawObject resizer;
+
 
     private Vector3 dirToScale;
+
+    private GameObject pivot;
+    private MeshCollider objSelectedMeshCol;
     void Start()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
         man = rayInteractor.interactionManager;
         rayInteractor.selectEntered.AddListener(selected);
-        resizer = GetComponent<DrawObject>();
     }
     private void Select(SelectEnterEventArgs args)
     {
@@ -34,32 +36,40 @@ public class ModifyExistingObject : MonoBehaviour
         {
             return;
         }
-        Debug.Log(args.interactableObject.transform.gameObject);
-        Debug.Log(args.interactableObject.transform.gameObject.GetComponent<ObjectData>());
+
         if (args.interactableObject.transform.gameObject.GetComponent<ObjectData>().placed)
         {
-            Debug.Log("we're getting to the selected part!");
             objSelected = args.interactableObject.transform.gameObject;
             objSelectedParent = objSelected.transform.parent;
+            objSelected.transform.SetParent(null, true);
             Main();
         }
     }
     private void Deselect(SelectExitEventArgs args)
     {
-        resizer.ResizeObject(objSelected, FloatFromVector(selector.transform.position - objSelected.transform.position, dirToScale), dirToScale);
+        Resize();
         Destroy(selector);
         objSelected.transform.SetParent(objSelectedParent, true);
+        objSelected.transform.localScale = GetAbsoluteDirection(objSelected.transform.localScale);
         objSelectedParent = null;
         objSelected = null;
         selector = null;
+        Destroy(pivot);
+        pivot = null;
+        objSelectedMeshCol = null;
+
         
+    }
+    private void Resize()
+    {
+        pivot.transform.localScale = MakeVectorBaseOne(Vector3.Scale(-dirToScale, selector.transform.position - pivot.transform.position) / FloatFromVector(objSelected.transform.localScale, dirToScale));
     }
     private void Update()
     {
 
         if (selector != null)
         {
-            resizer.ResizeObject(objSelected, FloatFromVector(selector.transform.position - objSelected.transform.position, dirToScale), dirToScale);
+            Resize();
         }
     }
     protected virtual void selected(SelectEnterEventArgs args) => Select(args);
@@ -78,7 +88,16 @@ public class ModifyExistingObject : MonoBehaviour
             dirToScale = FindLargestDirection(selector.transform.localPosition);
             selector.transform.SetParent(null, true);
             Rigidbody selRB = selector.GetComponent<Rigidbody>();
-            if(dirToScale.x == 0)
+            pivot = new GameObject("Pivot");
+            objSelectedMeshCol = objSelected.GetComponent<MeshCollider>();
+            Vector3 absDir = GetAbsoluteDirection(dirToScale);
+            int dirSign = (int)Mathf.Sign(FloatFromVector(dirToScale, dirToScale));
+            float extent = FloatFromVector(objSelectedMeshCol.bounds.extents, dirToScale);
+            pivot.transform.position = objSelected.transform.position;
+            objSelected.transform.SetParent(pivot.transform);
+            pivot.transform.position += dirToScale * extent;
+            objSelected.transform.localPosition += -dirToScale * extent;
+            if (dirToScale.x == 0)
             {
                 selRB.constraints = RigidbodyConstraints.FreezePositionX;
             }
@@ -90,7 +109,6 @@ public class ModifyExistingObject : MonoBehaviour
             {
                 selRB.constraints = RigidbodyConstraints.FreezePositionZ;
             }
-            objSelected.transform.SetParent(null, true);
         }
     }
     private Vector3 FindLargestDirection(Vector3 point)
@@ -107,7 +125,7 @@ public class ModifyExistingObject : MonoBehaviour
             largestPoint = Mathf.Abs(point.z);
             dir = Vector3.back;
         }
-        return Vector3.Scale(dir, new Vector3(Mathf.Sign(point.z), Mathf.Sign(point.y), Mathf.Sign(point.z)));
+        return Vector3.Scale(dir, new Vector3(Mathf.Sign(point.x), Mathf.Sign(point.y), Mathf.Sign(point.z)));
     }
     
     private float FloatFromVector(Vector3 point, Vector3 direction)
@@ -115,16 +133,36 @@ public class ModifyExistingObject : MonoBehaviour
         Vector3 multipliedPoint = Vector3.Scale(point , direction);
         if(multipliedPoint.x != 0)
         {
-            return multipliedPoint.x;
+            return point.x;
         }
         if (multipliedPoint.y != 0)
         {
-            return multipliedPoint.y;
+            return point.y;
         }
         if (multipliedPoint.z != 0)
         {
-            return multipliedPoint.z;
+            return point.z;
         }
         return 0;
+    }
+    private Vector3 GetAbsoluteDirection(Vector3 direction)
+    {
+        return new Vector3(Mathf.Abs(direction.x), Mathf.Abs(direction.y), Mathf.Abs(direction.z));
+    }
+    private Vector3 MakeVectorBaseOne(Vector3 vector)
+    {
+        if (vector.x != 0)
+        {
+            return new Vector3(vector.x, 1, 1);
+        }
+        if (vector.y != 0)
+        {
+            return new Vector3(1, vector.y, 1);
+        }
+        if (vector.z != 0)
+        {
+            return new Vector3(1, 1, vector.z);
+        }
+        return vector;
     }
 }

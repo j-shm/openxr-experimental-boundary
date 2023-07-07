@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 
+/// <summary>
+/// Class <c>LoadObjects</c> is used for loading a json of objects into the scene.
+/// </summary>
 public class LoadObjects : MonoBehaviour
 {
     [SerializeField]
@@ -13,30 +14,59 @@ public class LoadObjects : MonoBehaviour
     [SerializeField]
     private GameObject objectToPlace;
     [SerializeField]
-    private HandleRayTable rayScript;
-    public void Load(string save = null)
+    private Material occul;
+    [SerializeField]
+    private bool useOccul;
+    /// <summary>
+    /// This method is the entry for the <c>LoadObjects</c> class it calls 
+    /// other methods that are needed to load and place objects
+    /// <param name="save">the save file.</param>
+    /// <param name="isFullFilePath">includes the directory or not.</param>
+    /// <example>
+    /// For example:
+    /// <code>
+    /// Load("C:/save.json",true)
+    /// </code>
+    /// Will load the file path C:/save.json
+    /// </example>
+    /// <returns>
+    /// Bool of success
+    /// </returns>
+    /// </summary>
+    public bool Load(string save = null, bool isFullFilePath = true)
     {
-        if(save == null)
+        if(save == null || save == "")
         {
             save = "roomscaleObjects.json";
         }
-        string fullFilePath = CheckSaveExists(save);
+        string fullFilePath = CheckSaveExists(save, isFullFilePath);
         if (fullFilePath != "")
         {
-            if(!Import(fullFilePath))
+            if(Import(fullFilePath))
             {
-                Debug.Log("loading failed :(");
+                return true;
             }
-            return;
+            Debug.LogError($"error importing! For: {save}");
+            return false;
         }
         Debug.LogError($"no save found! For: {save}");
+        return false;
 
     }
     
-    private string CheckSaveExists(string saveName = null)
+    public delegate void OnLoad(GameObject corner);
+    public OnLoad onLoad;
+    private string CheckSaveExists(string saveName = null, bool isFullFilePath = false)
     {
-        saveName = "roomscaleObjects.json";
-        string savePath = Application.persistentDataPath + "/saves/";
+        if (saveName == null)
+        {
+            saveName = "roomscaleObjects.json";
+        }
+        string savePath = "";
+        if(!isFullFilePath)
+        {
+            savePath = $"{Application.persistentDataPath}/saves/";
+        }
         if (File.Exists(savePath + saveName))
         {
             return savePath + saveName;
@@ -47,16 +77,6 @@ public class LoadObjects : MonoBehaviour
     {
         if (System.IO.File.Exists(file))
         {
-            if(rayScript == null)
-            {
-                rayScript = FindAnyObjectByType<HandleRayTable>();
-            }
-           
-            if(rayScript != null)
-            {
-                rayScript.FullCleanUp();
-            }
-
             try
             {
 
@@ -67,8 +87,8 @@ public class LoadObjects : MonoBehaviour
                 corner = Instantiate(cornerToPlace,ArrayToVector(cornerPos),Quaternion.identity);
 
                 var objs = o1["objects"];
-                rayScript.Setup(corner);
 
+                onLoad?.Invoke(corner);
                 //import each object
                 foreach (var obj in objs)
                 {
@@ -81,6 +101,11 @@ public class LoadObjects : MonoBehaviour
                         objPlaced.transform.localScale = ArrayToVector(objScale);
                         objPlaced.transform.localPosition = ArrayToVector(objPos);
                         objPlaced.GetComponent<ObjectData>().placed = true;
+                        objPlaced.GetComponent<Collider>().enabled = true;
+                        if(useOccul && occul != null)
+                        {
+                            objPlaced.GetComponent<Renderer>().material = occul;
+                        }
                     }
 
                 }

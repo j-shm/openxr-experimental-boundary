@@ -39,7 +39,10 @@ public class HandleRayTable : MonoBehaviour
     private GameObject corner;
 
     //other
+    [SerializeField]
+    private UserInterfaceHandler uiHandler;
     private Vector3 startingPoint;
+    
 
     private void Start()
     {
@@ -54,6 +57,7 @@ public class HandleRayTable : MonoBehaviour
     //we have picked a height now we will spawn the object
     private void Deselect(SelectExitEventArgs args)
     {
+        uiHandler.NextStage();
         placedObject = Instantiate(objToPlace, startingPoint, Quaternion.identity);
     }
     private void Update()
@@ -64,6 +68,7 @@ public class HandleRayTable : MonoBehaviour
             RaycastHit res;
             if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
             {
+                if (res.point.y < startingPoint.y) return;
                 objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
             }
         }
@@ -82,6 +87,7 @@ public class HandleRayTable : MonoBehaviour
             if(corner == null)
             {
                 corner = Instantiate(cornerToPlace, res.point, Quaternion.identity);
+                uiHandler.NextStage();
                 return;
             }
             if (spawnedSelector == null)
@@ -90,26 +96,29 @@ public class HandleRayTable : MonoBehaviour
 
                 spawnedSelector = Instantiate(selector, startingPoint, Quaternion.identity);
                 var spawnedSelectorGrabComp = spawnedSelector.GetComponent<XRGrabInteractable>();
-
+                spawnedSelector.GetComponent<DrawLineToPoint>().SetPoint(startingPoint);
                 //force pickup
                 man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
 
                 //add listener for when the height has been selected by the user deselecting the item
-                spawnedSelectorGrabComp.selectExited.AddListener(exited); 
+                spawnedSelectorGrabComp.selectExited.AddListener(exited);
+                uiHandler.NextStage();
                 return;
             }
+            if (res.point.y < startingPoint.y) return;
             /* clean up: remove all the object references and get ready for the next one*/
             objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
             ObjectData objData = placedObject.GetComponent<ObjectData>();
             objData.placed = true;
-            objData.objectType = ObjectType.Object.Table;
+            objData.objectType = uiHandler.GetObjectType();
             CleanUp();
         }
     }
 
     private void CleanUp()
     {
-        if(spawnedSelector != null)
+        uiHandler.ResetStage();
+        if (spawnedSelector != null)
         {
             Destroy(spawnedSelector);
             spawnedSelector = null;
@@ -117,6 +126,8 @@ public class HandleRayTable : MonoBehaviour
 
         if(placedObject != null)
         {
+            placedObject.transform.localScale = GetAbsoluteVector(placedObject.transform.localScale);
+            placedObject.GetComponent<Collider>().enabled = true;
             if(corner != null)
             {
                 placedObject.transform.SetParent(corner.transform, true);
@@ -124,6 +135,10 @@ public class HandleRayTable : MonoBehaviour
             placedObject = null;
         }
 
+    }
+    private Vector3 GetAbsoluteVector(Vector3 vector)
+    {
+        return new Vector3(Mathf.Abs(vector.x), Mathf.Abs(vector.y), Mathf.Abs(vector.z));
     }
 
     //used for the loading system

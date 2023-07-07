@@ -75,14 +75,20 @@ crashlytics-build.properties
 # Other stuff
 # XR Interaction and XR files
 /[Aa]ssets/ExampleAssets/
-/[Aa]ssets/XR/
-/[Aa]ssets/XRI/
 /[Aa]ssets/Samples/
 
 # Random Models and such that we use for testing
 /[Aa]ssets/Models/
 /[Aa]ssets/Models.meta
 
+# Text Mesh Pro
+/[Aa]ssets/TextMesh Pro
+/[Aa]ssets/TextMesh Pro.meta
+
 # VS STUFF
 .vsconfig
 .vscode/
+/Assets/Self/logo.png.meta
+/Packages/com.jshm.openxrboundary/Third Party Notices.md.meta
+/Packages/com.jshm.openxrboundary/README.md.meta
+*.meta

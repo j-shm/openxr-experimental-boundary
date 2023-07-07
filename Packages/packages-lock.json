@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.jshm.openxrboundary": {
+      "version": "file:com.jshm.openxrboundary",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "2.0.2"
+      }
+    },
     "com.unity.collab-proxy": {
       "version": "2.0.4",
       "depth": 0,

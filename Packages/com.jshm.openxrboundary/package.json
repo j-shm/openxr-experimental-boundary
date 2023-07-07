@@ -1,0 +1,10 @@
+{
+  "name": "com.jshm.openxrboundary",
+  "version": "1.0.0",
+  "displayName": "OpenXR Boundary",
+  "description": "This is a package for importing assets from the custom openxr boundary creator",
+  "unity": "2021.3",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.2"
+  }
+}
