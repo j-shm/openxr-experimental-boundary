@@ -85,6 +85,9 @@ crashlytics-build.properties
 /[Aa]ssets/TextMesh Pro
 /[Aa]ssets/TextMesh Pro.meta
 
+# Proxima
+/[Aa]ssets/Proxima/
+
 #Oculus Integration
 /[Aa]ssets/Oculus/
 
