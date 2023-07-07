@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 1297524225145150175}
   - component: {fileID: 1297524225145150174}
   - component: {fileID: 1297524225145150173}
-  - component: {fileID: 2941198434375003863}
-  - component: {fileID: 6383055704980494909}
+  - component: {fileID: 2846092801798165766}
+  - component: {fileID: 6774611785415115103}
   m_Layer: 0
   m_Name: Selector
   m_TagString: Untagged
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!120 &2941198434375003863
+--- !u!120 &2846092801798165766
 LineRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,7 +286,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab884956b3c8c0b41ac02b46126927aa, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -317,8 +317,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.019683838
+        time: 0.05294037
+        value: 0.033332825
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -365,7 +365,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &6383055704980494909
+--- !u!114 &6774611785415115103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,9 +374,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1297524225145150172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2531dc6887dc9984697a4b5127b8f8b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7552d6195ee62804cb22e76734301e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  point: {x: 0, y: 0, z: 0}
 --- !u!1001 &1297524224280002353
 PrefabInstance:
   m_ObjectHideFlags: 0

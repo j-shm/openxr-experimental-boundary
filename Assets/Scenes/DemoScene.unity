@@ -582,8 +582,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 147.05, y: 0}
+  m_SizeDelta: {x: 179.13, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &111028293
 MonoBehaviour:
@@ -6398,7 +6398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _port: 7759
-  _password: 
+  _password: sky
   _useHttps: 1
   _certificate: {fileID: 0}
   _certificatePassword: 

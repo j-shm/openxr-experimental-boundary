@@ -98,7 +98,12 @@ public class HandleRayTable : MonoBehaviour
                 var spawnedSelectorGrabComp = spawnedSelector.GetComponent<XRGrabInteractable>();
                 spawnedSelector.GetComponent<DrawLineToPoint>().SetPoint(startingPoint);
                 //force pickup
-                man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
+                if(objectRayInteractor is IXRSelectInteractor) {
+                    man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
+                } else {
+                    Debug.LogError("objectRayInteractor is not IXRSelectInteractor?");
+                }
+                
 
                 //add listener for when the height has been selected by the user deselecting the item
                 spawnedSelectorGrabComp.selectExited.AddListener(exited);
