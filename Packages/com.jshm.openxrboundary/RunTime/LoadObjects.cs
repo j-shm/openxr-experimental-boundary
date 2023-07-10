@@ -53,7 +53,10 @@ public class LoadObjects : MonoBehaviour
         return false;
 
     }
-    
+    public void LoadReturnVoid()
+    {
+        Load(null, false);
+    }
     public delegate void OnLoad(GameObject corner);
     public OnLoad onLoad;
     private string CheckSaveExists(string saveName = null, bool isFullFilePath = false)
