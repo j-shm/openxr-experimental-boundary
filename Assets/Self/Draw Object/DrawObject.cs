@@ -45,8 +45,9 @@ public class DrawObject : MonoBehaviour
         
         Resize(placedObject, maxPoint.y - spawnPoint.y, Vector3.up);
         
-        transform.rotation = Quaternion.LookRotation (pivotPoint - transform.position);
-        transform.eulerAngles = Vector3.Scale(transform.eulerAngles, Vector3.forward + Vector3.right);
+        //placedObject.transform.rotation = Quaternion.LookRotation (pivotPoint - placedObject.transform.position);
+        placedObject.transform.LookAt(pivotPoint); 
+        placedObject.transform.eulerAngles = Vector3.Scale(placedObject.transform.eulerAngles, Vector3.up);
         float xDiff = placedObject.transform.position.x - addPoint.x;
         float zDiff = placedObject.transform.position.z - pivotPoint.z;
         Resize(placedObject, xDiff, Vector3.left);
