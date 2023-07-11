@@ -24,7 +24,10 @@ public class HandleRayTable : MonoBehaviour
     //the box selector
     [SerializeField]
     private GameObject selector;
-
+    
+    [SerializeField]
+    private GameObject selectorPivot;
+    private GameObject spawnedSelectorPivot;
     private GameObject spawnedSelector;
 
     //the actual object
@@ -51,15 +54,28 @@ public class HandleRayTable : MonoBehaviour
         objectDrawer = GetComponent<DrawObject>();
     }
     
-    protected virtual void exited(SelectExitEventArgs args) => Deselect(args);
-
-
-    //we have picked a height now we will spawn the object
-    private void Deselect(SelectExitEventArgs args)
+    protected virtual void exitedHeightSelector(SelectExitEventArgs args) => DeselectHeight(args);
+    protected virtual void exitedPivotSelector(SelectExitEventArgs args) => DeselectPivot(args);
+    
+    private void DeselectHeight(SelectExitEventArgs args)
+    {
+        uiHandler.NextStage();
+        ((XRGrabInteractable)args.interactableObject).enabled = false;
+        args.interactableObject.transform.gameObject.GetComponent<Collider>().enabled = false;
+        spawnedSelectorPivot = Instantiate(selectorPivot, args.interactableObject.transform);
+        var spawnedSelectorPivotGrabComp = spawnedSelectorPivot.GetComponent<XRGrabInteractable>();
+        spawnedSelectorPivot.transform.SetParent(null,true);
+        spawnedSelectorPivot.GetComponent<DrawLineToPoint>().SetPoint(spawnedSelector.transform.position);
+        man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorPivotGrabComp);
+        spawnedSelectorPivotGrabComp.selectExited.AddListener(exitedPivotSelector);
+    }
+    private void DeselectPivot(SelectExitEventArgs args)
     {
         uiHandler.NextStage();
         placedObject = Instantiate(objToPlace, startingPoint, Quaternion.identity);
     }
+    
+
     private void Update()
     {
         //resize the object dynamically to the raycast end point whilst the object is still hasn't been finalised.
@@ -69,9 +85,14 @@ public class HandleRayTable : MonoBehaviour
             if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
             {
                 if (res.point.y < startingPoint.y) return;
-                objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
+                Resize(res.point);
             }
         }
+    }
+
+    private void Resize(Vector3 addPoint)
+    {
+        objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position,spawnedSelectorPivot.transform.position, addPoint);
     }
     public void Select()
     {
@@ -101,13 +122,13 @@ public class HandleRayTable : MonoBehaviour
                 man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
 
                 //add listener for when the height has been selected by the user deselecting the item
-                spawnedSelectorGrabComp.selectExited.AddListener(exited);
+                spawnedSelectorGrabComp.selectExited.AddListener(exitedHeightSelector);
                 uiHandler.NextStage();
                 return;
             }
             if (res.point.y < startingPoint.y) return;
             /* clean up: remove all the object references and get ready for the next one*/
-            objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position, res.point);
+            Resize(res.point);
             ObjectData objData = placedObject.GetComponent<ObjectData>();
             objData.placed = true;
             objData.objectType = uiHandler.GetObjectType();
