@@ -578,10 +578,10 @@ RectTransform:
   m_Father: {fileID: 1923154652}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 147.05, y: -28.75}
-  m_SizeDelta: {x: 46.05, y: 33.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 33.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &86249292
 CanvasRenderer:
@@ -791,10 +791,10 @@ RectTransform:
   m_Father: {fileID: 1923154652}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 147.05, y: -63.88}
-  m_SizeDelta: {x: 179.13, y: 16.76}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 147.05, y: 0}
+  m_SizeDelta: {x: 179.13, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &111028293
 MonoBehaviour:
@@ -3254,7 +3254,7 @@ MonoBehaviour:
   objectRayInteractor: {fileID: 188020243}
   selector: {fileID: 1297524225145150172, guid: 9da8536a902bcb14f8b0ef6aa159358f,
     type: 3}
-  selectorPivot: {fileID: 1297524225145150172, guid: 25ff316c358cf3b4b88b96ad3a18a77e,
+  selectorPivot: {fileID: 1297524225145150172, guid: 855b483e720996a4c939be93294100fe,
     type: 3}
   objToPlace: {fileID: 5997841491947964950, guid: b17d813f555b1b54584c6718f3a16854,
     type: 3}
@@ -6234,7 +6234,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 294.1, y: 88.26}
+  m_SizeDelta: {x: 294.1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1923154653
 MonoBehaviour:

@@ -46,7 +46,6 @@ public class HandleRayTable : MonoBehaviour
     private UserInterfaceHandler uiHandler;
     private Vector3 startingPoint;
 
-    private Vector3 directionAfterRotationApplied;
     
 
     private void Start()
@@ -77,20 +76,7 @@ public class HandleRayTable : MonoBehaviour
         placedObject = Instantiate(objToPlace, startingPoint, Quaternion.identity);
         placedObject.transform.LookAt(spawnedSelectorPivot.transform); 
         placedObject.transform.eulerAngles = Vector3.Scale(placedObject.transform.eulerAngles, Vector3.up);
-        objectDrawer.ResizeToPivotAndHeightOfObject(placedObject,startingPoint,spawnedSelector.transform.position,spawnedSelectorPivot.transform.position);
-        var localPos = objectDrawer.transform.localPosition;
-        if (localPos.x == 0)
-        {
-            directionAfterRotationApplied = Vector3.right;
-        } else if (localPos.y == 0)
-        {
-            Debug.Log(localPos.y);
-            directionAfterRotationApplied = Vector3.up;
-        } else
-        {
-            directionAfterRotationApplied = Vector3.forward;
-        }
-        Debug.Log(directionAfterRotationApplied);
+        objectDrawer.FirstResize(placedObject,spawnedSelector.transform.position.y - startingPoint.y,spawnedSelectorPivot);
     }
     
 
@@ -110,9 +96,11 @@ public class HandleRayTable : MonoBehaviour
 
     private void Resize(Vector3 addPoint)
     {
-        Debug.Log(directionAfterRotationApplied);
-        objectDrawer.ResizeFinalSideOfObject(placedObject,addPoint,directionAfterRotationApplied);
-        //objectDrawer.ResizeObject(placedObject, startingPoint, spawnedSelector.transform.position,spawnedSelectorPivot.transform.position, addPoint);
+        //again destorying a lot is bad
+        GameObject addPointObj = new GameObject("addPoint");
+        addPointObj.transform.position = addPoint; 
+        objectDrawer.SecondResize(placedObject,addPointObj);
+        Destroy(addPointObj);
     }
     public void Select()
     {
@@ -163,6 +151,11 @@ public class HandleRayTable : MonoBehaviour
         {
             Destroy(spawnedSelector);
             spawnedSelector = null;
+        }
+        if(spawnedSelectorPivot != null)
+        {
+            Destroy(spawnedSelectorPivot);
+            spawnedSelectorPivot = null;
         }
 
         if(placedObject != null)

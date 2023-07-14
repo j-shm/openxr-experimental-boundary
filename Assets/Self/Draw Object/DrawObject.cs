@@ -11,84 +11,38 @@ public class DrawObject : MonoBehaviour
     private Material occul;
 
     private Vector3 fowardRight = new Vector3(1,0,1);
-    private void Resize(GameObject obj,float amount, Vector3 direction,bool localPos = false)
+    private void Resize(GameObject obj,float amount, Vector3 direction)
     {
-        if (localPos)
-        {
-            obj.transform.localPosition += direction * amount / 2;
-        }
-        else
-        {
-            obj.transform.position += direction * amount / 2;
-        }
-        
+        obj.transform.position += direction * amount / 2;
         obj.transform.localScale += direction * amount; 
     }
-    private void ResetResize(GameObject obj)
-    {
-        Resize(obj, obj.transform.localScale.x, Vector3.left);
-        Resize(obj, obj.transform.localScale.z, Vector3.back);
-        Resize(obj, obj.transform.localScale.y, Vector3.down);
-    }
-    public void ResizeObject(GameObject obj, float amount, Vector3 direction)
-    {
-        Resize(obj, amount, direction);
-    }
-    // Deprecated API.
-    public void ResizeObject(GameObject placedObject, Vector3 spawnPoint, Vector3 maxPoint, Vector3 addPoint)
-    {
-        //have to reset sizes before placing objects: if you dont then it'll be incorrect!
-        ResetResize(placedObject);
 
-        Resize(placedObject, maxPoint.y - spawnPoint.y, Vector3.up);
-        
-        float xDiff = placedObject.transform.position.x - addPoint.x;
-        float zDiff = placedObject.transform.position.z - addPoint.z;
-        Resize(placedObject, xDiff, Vector3.left);
-        Resize(placedObject, zDiff, Vector3.back);
-    }
+    //these two functions are heavily taxing: destroying objects constantly is very bad!
+    //TODO: refactor these two functions to be more efficient 
+    public void FirstResize(GameObject placedObject,float heightAmount,GameObject pivotPoint) {
 
-    public void ResizeObject(GameObject placedObject, Vector3 spawnPoint, Vector3 maxPoint,Vector3 pivotPoint , Vector3 addPoint)
-    {
-        //have to reset sizes before placing objects: if you dont then it'll be incorrect!
-        ResetResize(placedObject);
-        
-        Resize(placedObject, maxPoint.y - spawnPoint.y, Vector3.up);
-        float xDiff = placedObject.transform.position.x - addPoint.x;
-        float zDiff = placedObject.transform.position.z - pivotPoint.z;
-        Resize(placedObject, xDiff, Vector3.left);
-        Resize(placedObject, zDiff, Vector3.back);
+        var tempPoint = new GameObject("temp pivot point"); 
+        Resize(placedObject, heightAmount, Vector3.up);
+        placedObject.transform.LookAt(pivotPoint.transform); 
+        placedObject.transform.eulerAngles = Vector3.Scale(placedObject.transform.eulerAngles, Vector3.up);
+        tempPoint.transform.position = placedObject.transform.position;
+        tempPoint.transform.rotation = placedObject.transform.rotation;
+        pivotPoint.transform.SetParent(tempPoint.transform,true);
+        var amt =  pivotPoint.transform.localPosition.z;
+        pivotPoint.transform.SetParent(null,true);
+        placedObject.transform.Translate(Vector3.forward*amt/2);
+        placedObject.transform.localScale += Vector3.forward*amt;
+        Destroy(tempPoint);
     }
-
-    public void ResizeFinalSideOfObject(GameObject placedObject,Vector3 point,Vector3 dir)
-    {
-        dir = -dir;
-        Resize(placedObject, placedObject.transform.localScale.x, dir,true);
-        float dirDiff = FloatFromVector(placedObject.transform.position,dir) - FloatFromVector(point,dir);
-        Resize(placedObject, dirDiff, dir,true);
-
-    }
-    public void ResizeToPivotAndHeightOfObject(GameObject placedObject,Vector3 spawnPoint,Vector3 heightPoint,Vector3 pivotPoint)
-    {
-        Resize(placedObject, heightPoint.y - spawnPoint.y, Vector3.up);
-        
-        Resize(placedObject, placedObject.transform.position.z - pivotPoint.z, Vector3.back);
-    }
-    private float FloatFromVector(Vector3 point, Vector3 direction)
-    {
-        Vector3 multipliedPoint = Vector3.Scale(point , direction);
-        if(multipliedPoint.x != 0)
-        {
-            return point.x;
-        }
-        if (multipliedPoint.y != 0)
-        {
-            return point.y;
-        }
-        if (multipliedPoint.z != 0)
-        {
-            return point.z;
-        }
-        return 0;
+    public void SecondResize(GameObject placedObject,GameObject addPoint) {
+        var tempPoint = new GameObject("temp pivot point"); 
+        tempPoint.transform.position = placedObject.transform.position;
+        tempPoint.transform.rotation = placedObject.transform.rotation;
+        addPoint.transform.SetParent(tempPoint.transform,true);
+        var amt =  addPoint.transform.localPosition.x;
+        addPoint.transform.SetParent(null,true);
+        placedObject.transform.Translate(Vector3.right*amt/2);
+        placedObject.transform.localScale += Vector3.right*amt;
+        Destroy(tempPoint);
     }
 }

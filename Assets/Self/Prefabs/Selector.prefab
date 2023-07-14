@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1297524225145150174}
   - component: {fileID: 1297524225145150173}
   - component: {fileID: 2941198434375003863}
-  - component: {fileID: 8286905960386726729}
+  - component: {fileID: 906485457450163741}
   m_Layer: 0
   m_Name: Selector
   m_TagString: Untagged
@@ -365,7 +365,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &8286905960386726729
+--- !u!114 &906485457450163741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1297524225145150172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21453538455ecf1419b2ed42e79788c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7552d6195ee62804cb22e76734301e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   point: {x: 0, y: 0, z: 0}
