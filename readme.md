@@ -29,8 +29,8 @@ These should be installed when you open this unity project apart from sample ass
 | Placing Corner    	| ✔️              	|
 | Drawing Objects   	| ✔️              	|
 | Deleting Objects  	| ✔️              	|
-| Modifying Objects 	| ✔️              	|
+| Modifying Objects 	| 🚧              	|
 | Object Tags       	| ✔️              	|
 | User Interface    	| ✔️              	|
 | SDK for getting objects    	| ✔️              	|
-| Passthrough    	| ❌              	|
+| Passthrough    	| 🚧              	|
