@@ -17,18 +17,20 @@ public class ModifyExistingObject : MonoBehaviour
 
     private GameObject objSelected;
     private Transform objSelectedParent;
-
+    private DrawObject objectDrawer;
 
 
     private Vector3 dirToScale;
 
     private GameObject pivot;
     private MeshCollider objSelectedMeshCol;
+    private GameObject selectorHolder;
     void Start()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
         man = rayInteractor.interactionManager;
         rayInteractor.selectEntered.AddListener(selected);
+        objectDrawer = GetComponent<DrawObject>();
     }
     private void Select(SelectEnterEventArgs args)
     {
@@ -62,7 +64,8 @@ public class ModifyExistingObject : MonoBehaviour
     }
     private void Resize()
     {
-        pivot.transform.localScale = MakeVectorBaseOne(Vector3.Scale(-dirToScale, selector.transform.position - pivot.transform.position) / FloatFromVector(objSelected.transform.localScale, dirToScale));
+        objectDrawer.ModifyResize(objSelected, selector, dirToScale);
+
     }
     private void Update()
     {
@@ -84,31 +87,16 @@ public class ModifyExistingObject : MonoBehaviour
             var spawnedSelectorGrabComp = selector.GetComponent<XRGrabInteractable>();
             man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorGrabComp);
             spawnedSelectorGrabComp.selectExited.AddListener(exited);
+
             selector.transform.SetParent(objSelected.transform, true);
             dirToScale = FindLargestDirection(selector.transform.localPosition);
             selector.transform.SetParent(null, true);
-            Rigidbody selRB = selector.GetComponent<Rigidbody>();
-            pivot = new GameObject("Pivot");
-            objSelectedMeshCol = objSelected.GetComponent<MeshCollider>();
             Vector3 absDir = GetAbsoluteDirection(dirToScale);
-            int dirSign = (int)Mathf.Sign(FloatFromVector(dirToScale, dirToScale));
-            float extent = FloatFromVector(objSelectedMeshCol.bounds.extents, dirToScale);
-            pivot.transform.position = objSelected.transform.position;
-            objSelected.transform.SetParent(pivot.transform);
-            pivot.transform.position += dirToScale * extent;
-            objSelected.transform.localPosition += -dirToScale * extent;
-            if (dirToScale.x == 0)
-            {
-                selRB.constraints = RigidbodyConstraints.FreezePositionX;
-            }
-            if(dirToScale.y == 0)
-            {
-                selRB.constraints = RigidbodyConstraints.FreezePositionY;
-            }
-            if (dirToScale.z == 0)
-            {
-                selRB.constraints = RigidbodyConstraints.FreezePositionZ;
-            }
+
+            selectorHolder = new GameObject("selector holder");
+            selectorHolder.transform.position = objSelected.transform.position;
+            selectorHolder.transform.rotation = objSelected.transform.rotation;
+            selector.transform.SetParent(selectorHolder.transform, true);
         }
     }
     private Vector3 FindLargestDirection(Vector3 point)

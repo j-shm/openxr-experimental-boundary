@@ -45,4 +45,56 @@ public class DrawObject : MonoBehaviour
         placedObject.transform.localScale += Vector3.right*amt;
         Destroy(tempPoint);
     }
+    public void ModifyResize(GameObject placedObject,GameObject pivotPoint, Vector3 dir) {
+        /*Debug.Log(dir);
+        GameObject pivot = new GameObject("Pivot Offset");
+        pivot.transform.position = placedObject.transform.position;
+        pivot.transform.rotation = placedObject.transform.rotation;
+        pivotPoint.transform.SetParent(pivot.transform, true);
+        var amt =  (FloatFromVector(pivotPoint.transform.localPosition,dir));
+        pivotPoint.transform.SetParent(null, true);
+        if(Mathf.Abs(amt) < 0.01) {
+            return;
+        }
+        Debug.Log(amt + " " + dir);
+        placedObject.transform.Translate(dir*amt/2);
+        placedObject.transform.localScale = MakeVectorValueZero(placedObject.transform.localScale,dir) + dir*amt;
+        Destroy(pivot);*/
+
+        var tempPoint = new GameObject("temp pivot point"); 
+        tempPoint.transform.position = placedObject.transform.position;
+        tempPoint.transform.rotation = placedObject.transform.rotation;
+        pivotPoint.transform.SetParent(tempPoint.transform,true);
+        var amt =  pivotPoint.transform.localPosition.x;
+        pivotPoint.transform.SetParent(null,true);
+        placedObject.transform.Translate(Vector3.right*amt/2);
+        placedObject.transform.localScale += Vector3.right*amt;
+        Destroy(tempPoint);
+    }
+    private float FloatFromVector(Vector3 point, Vector3 direction)
+    {
+        Vector3 multipliedPoint = Vector3.Scale(point , direction);
+        if(multipliedPoint.x != 0)
+        {
+            return point.x;
+        }
+        if (multipliedPoint.y != 0)
+        {
+            return point.y;
+        }
+        if (multipliedPoint.z != 0)
+        {
+            return point.z;
+        }
+        return 0;
+    }
+    private Vector3 MakeVectorValueZero(Vector3 vector, Vector3 dir) {
+        if(dir.x != 0) {
+            return new Vector3(0, vector.y,vector.z);
+        } else if(dir.y != 0) {
+            return new Vector3(vector.x, 0, vector.z);
+        } else {
+            return new Vector3(vector.x, vector.y, 0);
+        }
+    }
 }
