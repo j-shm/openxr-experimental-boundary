@@ -97,6 +97,7 @@ public class ModifyExistingObject : MonoBehaviour
             selectorHolder.transform.position = objSelected.transform.position;
             selectorHolder.transform.rotation = objSelected.transform.rotation;
             selector.transform.SetParent(selectorHolder.transform, true);
+            Debug.Log("dirtoscale: " + dirToScale);
         }
     }
     private Vector3 FindLargestDirection(Vector3 point)

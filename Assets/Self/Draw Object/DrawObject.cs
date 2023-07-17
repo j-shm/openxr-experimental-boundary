@@ -35,7 +35,7 @@ public class DrawObject : MonoBehaviour
         Destroy(tempPoint);
     }
     public void SecondResize(GameObject placedObject,GameObject addPoint) {
-        var tempPoint = new GameObject("temp pivot point"); 
+        var tempPoint = new GameObject("temp pivot point");
         tempPoint.transform.position = placedObject.transform.position;
         tempPoint.transform.rotation = placedObject.transform.rotation;
         addPoint.transform.SetParent(tempPoint.transform,true);

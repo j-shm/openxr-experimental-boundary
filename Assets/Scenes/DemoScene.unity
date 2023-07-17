@@ -3254,7 +3254,7 @@ MonoBehaviour:
   objectRayInteractor: {fileID: 188020243}
   selector: {fileID: 1297524225145150172, guid: 9da8536a902bcb14f8b0ef6aa159358f,
     type: 3}
-  selectorPivot: {fileID: 1297524225145150172, guid: 855b483e720996a4c939be93294100fe,
+  selectorPivot: {fileID: 1297524225145150172, guid: 25ff316c358cf3b4b88b96ad3a18a77e,
     type: 3}
   objToPlace: {fileID: 5997841491947964950, guid: b17d813f555b1b54584c6718f3a16854,
     type: 3}
