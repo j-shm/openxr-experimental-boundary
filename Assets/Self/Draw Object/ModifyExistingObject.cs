@@ -62,8 +62,15 @@ public class ModifyExistingObject : MonoBehaviour
 
         
     }
+
+    public string thing = "";
     private void Resize()
     {
+        var fsdfsd = objSelected.GetComponent<MeshCollider>().bounds.max.x - selector.transform.position.x;
+        thing += "\n"+
+                    fsdfsd
+                    +","+
+                    objSelected.transform.localScale.x;
         objectDrawer.ModifyResize(objSelected, selector, dirToScale);
 
     }

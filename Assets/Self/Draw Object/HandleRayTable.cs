@@ -68,6 +68,7 @@ public class HandleRayTable : MonoBehaviour
         spawnedSelectorPivot.transform.SetParent(null,true);
         spawnedSelectorPivot.GetComponent<DrawLineToPoint>().SetPoint(spawnedSelector.transform.position);
         man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorPivotGrabComp);
+        
         spawnedSelectorPivotGrabComp.selectExited.AddListener(exitedPivotSelector);
     }
     private void DeselectPivot(SelectExitEventArgs args)
@@ -93,13 +94,18 @@ public class HandleRayTable : MonoBehaviour
             }
         }
     }
-
+    [SerializeField]
+    public string lol = "";
     private void Resize(Vector3 addPoint)
     {
         //again destorying a lot is bad
         GameObject addPointObj = new GameObject("addPoint");
         addPointObj.transform.position = addPoint; 
         objectDrawer.SecondResize(placedObject,addPointObj);
+        addPointObj.transform.SetParent(placedObject.transform,true);
+        var thing = placedObject.GetComponent<Collider>().bounds.max - addPointObj.transform.localScale;
+        lol += thing + "|";
+        Debug.Log(thing);
         Destroy(addPointObj);
     }
     public void Select()

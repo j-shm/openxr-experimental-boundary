@@ -39,6 +39,26 @@ public class LimitDrawingToOneObject : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Make one interactor have a status and the rest have the other.
+    /// </summary>
+
+    /// <param name="obj">Interactor to have enable.</param>
+    /// /// <param name="enable">Value for interactor.</param>
+    public void SelectObject(GameObject obj,bool enable = true)
+    {
+        for (int i =0; i < rayInteractorsVisuals.Count; i++)
+        {
+            if(rayInteractorsVisuals[i].gameObject == obj)
+            {
+                rayInteractorsVisuals[i].enabled = enable;
+                rayInteractors[i].allowSelect = enable;
+                continue;
+            }
+            rayInteractorsVisuals[i].enabled = !enable;
+            rayInteractors[i].allowSelect = !enable;
+        }
+    }
     private void Deselect(SelectExitEventArgs args)
     {
         StartCoroutine(DoDeselect());

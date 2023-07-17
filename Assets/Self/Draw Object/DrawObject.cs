@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using Vector3 = UnityEngine.Vector3;
 
 
 public class DrawObject : MonoBehaviour
@@ -39,7 +42,7 @@ public class DrawObject : MonoBehaviour
         tempPoint.transform.position = placedObject.transform.position;
         tempPoint.transform.rotation = placedObject.transform.rotation;
         addPoint.transform.SetParent(tempPoint.transform,true);
-        var amt =  addPoint.transform.localPosition.x;
+        var amt =  addPoint.transform.localPosition.x - placedObject.GetComponent<Collider>().bounds.extents.x;
         addPoint.transform.SetParent(null,true);
         placedObject.transform.Translate(Vector3.right*amt/2);
         placedObject.transform.localScale += Vector3.right*amt;
@@ -52,10 +55,17 @@ public class DrawObject : MonoBehaviour
         tempPoint.transform.position = placedObject.transform.position;
         tempPoint.transform.rotation = placedObject.transform.rotation;
         pivotPoint.transform.SetParent(tempPoint.transform,true);
-        var amt =  FloatFromVector(pivotPoint.transform.localPosition,dir);
+        var amt =  FloatFromVector(pivotPoint.transform.localPosition ,dir) - FloatFromVector(placedObject.GetComponent<Collider>().bounds.extents,dir); 
         pivotPoint.transform.SetParent(null,true);
         placedObject.transform.Translate(dir*amt/2);
         placedObject.transform.localScale += dir*amt;
+        Debug.Log("trans: " + dir*amt/2 + " scale: " + dir*amt);
+        Debug.Log(placedObject.transform.localScale + " " + dir*amt);
+        
+        /*
+        negative dir = negative trans, negative scale
+        pos dir = pos trans, pos scale
+        */
         Destroy(tempPoint);
     }
     private Vector3 GetAbsoluteDirection(Vector3 direction)
