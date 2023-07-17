@@ -47,26 +47,12 @@ public class DrawObject : MonoBehaviour
     }
     public void ModifyResize(GameObject placedObject,GameObject pivotPoint, Vector3 dir) {
         dir = GetAbsoluteDirection(dir);
-        /*Debug.Log(dir);
-        GameObject pivot = new GameObject("Pivot Offset");
-        pivot.transform.position = placedObject.transform.position;
-        pivot.transform.rotation = placedObject.transform.rotation;
-        pivotPoint.transform.SetParent(pivot.transform, true);
-        var amt =  (FloatFromVector(pivotPoint.transform.localPosition,dir));
-        pivotPoint.transform.SetParent(null, true);
-        if(Mathf.Abs(amt) < 0.01) {
-            return;
-        }
-        Debug.Log(amt + " " + dir);
-        placedObject.transform.Translate(dir*amt/2);
-        placedObject.transform.localScale = MakeVectorValueZero(placedObject.transform.localScale,dir) + dir*amt;
-        Destroy(pivot);*/
-
+        
         var tempPoint = new GameObject("temp pivot point"); 
         tempPoint.transform.position = placedObject.transform.position;
         tempPoint.transform.rotation = placedObject.transform.rotation;
         pivotPoint.transform.SetParent(tempPoint.transform,true);
-        var amt =  pivotPoint.transform.localPosition.x;
+        var amt =  FloatFromVector(pivotPoint.transform.localPosition,dir);
         pivotPoint.transform.SetParent(null,true);
         placedObject.transform.Translate(dir*amt/2);
         placedObject.transform.localScale += dir*amt;

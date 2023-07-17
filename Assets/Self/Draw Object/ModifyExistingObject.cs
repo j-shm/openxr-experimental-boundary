@@ -89,7 +89,7 @@ public class ModifyExistingObject : MonoBehaviour
             spawnedSelectorGrabComp.selectExited.AddListener(exited);
 
             selector.transform.SetParent(objSelected.transform, true);
-            dirToScale = FindLargestDirection(selector.transform.localPosition);
+            dirToScale = -FindLargestDirection(selector.transform.localPosition);
             selector.transform.SetParent(null, true);
             Vector3 absDir = GetAbsoluteDirection(dirToScale);
 
