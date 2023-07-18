@@ -38,6 +38,7 @@ public class LoadObjects : MonoBehaviour
         if(save == null || save == "")
         {
             save = "roomscaleObjects.json";
+            isFullFilePath = false;
         }
         string fullFilePath = CheckSaveExists(save, isFullFilePath);
         if (fullFilePath != "")
@@ -52,6 +53,11 @@ public class LoadObjects : MonoBehaviour
         Debug.LogError($"no save found! For: {save}");
         return false;
 
+    }
+    [Obsolete("DO NOT USE!! USE Load()")]
+    public void DoLoad()
+    {
+        Load(null);
     }
     
     public delegate void OnLoad(GameObject corner);
@@ -100,6 +106,7 @@ public class LoadObjects : MonoBehaviour
                         GameObject objPlaced = Instantiate(objectToPlace, corner.transform);
                         objPlaced.transform.localScale = ArrayToVector(objScale);
                         objPlaced.transform.localPosition = ArrayToVector(objPos);
+                        objPlaced.transform.eulerAngles = ArrayToVector(objRot);
                         objPlaced.GetComponent<ObjectData>().placed = true;
                         objPlaced.GetComponent<Collider>().enabled = true;
                         if(useOccul && occul != null)

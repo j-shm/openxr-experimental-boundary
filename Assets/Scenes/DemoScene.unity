@@ -793,8 +793,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 147.05, y: 0}
-  m_SizeDelta: {x: 179.13, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &111028293
 MonoBehaviour:
@@ -1822,8 +1822,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 147.05, y: 0}
-  m_SizeDelta: {x: 262.1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &248855836
 MonoBehaviour:
@@ -3274,7 +3274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418d9092a7ef8534f96709be2c000fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  occul: {fileID: 2100000, guid: e4c7370f062c1924cbcc480298c0c971, type: 2}
 --- !u!114 &1204261812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5727,7 +5726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418d9092a7ef8534f96709be2c000fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  occul: {fileID: 0}
 --- !u!114 &1874037762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6161,9 +6159,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1874892189}
-        m_TargetAssemblyTypeName: LoadObjects, Assembly-CSharp
-        m_MethodName: Load
-        m_Mode: 5
+        m_TargetAssemblyTypeName: LoadObjects, jshm.openxrexpeirmentalboundary.Runtime
+        m_MethodName: DoLoad
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7788,8 +7786,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 147.05, y: 0}
-  m_SizeDelta: {x: 262.1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3797002579361771127
 GameObject:

@@ -8,6 +8,7 @@ public class SaveObjects : MonoBehaviour
 {
     public void Save()
     {
+        Debug.Log("saving....");
         //get all the objects attached to this corner and serialise them for saving.
         List<SerialObject> objects = new List<SerialObject>();
         foreach(Transform child in this.gameObject.transform)
