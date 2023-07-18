@@ -70,6 +70,18 @@ public class HandleRayTable : MonoBehaviour
         man.SelectEnter((IXRSelectInteractor)objectRayInteractor, spawnedSelectorPivotGrabComp);
         
         spawnedSelectorPivotGrabComp.selectExited.AddListener(exitedPivotSelector);
+        StartCoroutine(TurnOffOthers());
+    }
+    //this is stupid: but im not sure a better way to handle LimitDrawingToOneObject
+    //there is .1 second where you are able to break it.
+    private IEnumerator TurnOffOthers()
+    {
+        var script = this.gameObject.transform.parent.GetComponent<LimitDrawingToOneObject>();
+        script.SelectObject(objectRayInteractor.gameObject);
+        yield return new WaitForSeconds(1f);
+        script.SelectObject(objectRayInteractor.gameObject);
+        yield return new WaitForSeconds(.1f);
+        script.SelectObject(objectRayInteractor.gameObject);
     }
     private void DeselectPivot(SelectExitEventArgs args)
     {
@@ -94,8 +106,7 @@ public class HandleRayTable : MonoBehaviour
             }
         }
     }
-    [SerializeField]
-    public string lol = "";
+   
     private void Resize(Vector3 addPoint)
     {
         //again destorying a lot is bad

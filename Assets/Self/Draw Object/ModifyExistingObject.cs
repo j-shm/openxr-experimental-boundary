@@ -34,6 +34,8 @@ public class ModifyExistingObject : MonoBehaviour
     }
     private void Select(SelectEnterEventArgs args)
     {
+        
+        
         if(objSelected != null || selector != null)
         {
             return;
@@ -67,7 +69,6 @@ public class ModifyExistingObject : MonoBehaviour
     private void Resize()
     {
         objectDrawer.ModifyResize(objSelected, selector, dirToScale);
-
     }
     private void Update()
     {
@@ -102,6 +103,8 @@ public class ModifyExistingObject : MonoBehaviour
             Debug.Log("dirtoscale: " + dirToScale);
         }
     }
+
+
     private Vector3 FindLargestDirection(Vector3 point)
     {
         Vector3 dir = Vector3.left;
@@ -119,41 +122,10 @@ public class ModifyExistingObject : MonoBehaviour
         return Vector3.Scale(dir, new Vector3(Mathf.Sign(point.x), Mathf.Sign(point.y), Mathf.Sign(point.z)));
     }
     
-    private float FloatFromVector(Vector3 point, Vector3 direction)
-    {
-        Vector3 multipliedPoint = Vector3.Scale(point , direction);
-        if(multipliedPoint.x != 0)
-        {
-            return point.x;
-        }
-        if (multipliedPoint.y != 0)
-        {
-            return point.y;
-        }
-        if (multipliedPoint.z != 0)
-        {
-            return point.z;
-        }
-        return 0;
-    }
+
     private Vector3 GetAbsoluteDirection(Vector3 direction)
     {
         return new Vector3(Mathf.Abs(direction.x), Mathf.Abs(direction.y), Mathf.Abs(direction.z));
     }
-    private Vector3 MakeVectorBaseOne(Vector3 vector)
-    {
-        if (vector.x != 0)
-        {
-            return new Vector3(vector.x, 1, 1);
-        }
-        if (vector.y != 0)
-        {
-            return new Vector3(1, vector.y, 1);
-        }
-        if (vector.z != 0)
-        {
-            return new Vector3(1, 1, vector.z);
-        }
-        return vector;
-    }
+
 }

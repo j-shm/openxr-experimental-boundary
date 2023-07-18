@@ -86,7 +86,7 @@ public class DrawObject : MonoBehaviour
         placedObject.transform.Translate(amtToTranslate);
         placedObject.transform.localScale += amtToScale;
 
-
+        
         Destroy(tempPoint);
     }
     private Vector3 GetAbsoluteDirection(Vector3 direction)
