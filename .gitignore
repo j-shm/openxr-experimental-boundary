@@ -92,3 +92,19 @@ crashlytics-build.properties
 /Packages/com.jshm.openxrboundary/Third Party Notices.md.meta
 /Packages/com.jshm.openxrboundary/README.md.meta
 *.meta
+
+#RIDER STUFF
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/.idea.vr boxes.iml
+/contentModel.xml
+/projectSettingsUpdater.xml
+/modules.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+.idea/*

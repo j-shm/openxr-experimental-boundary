@@ -10,10 +10,6 @@ using Vector3 = UnityEngine.Vector3;
 
 public class DrawObject : MonoBehaviour
 {
-    [SerializeField]
-    private Material occul;
-
-    private Vector3 fowardRight = new Vector3(1,0,1);
     private void Resize(GameObject obj,float amount, Vector3 direction)
     {
         obj.transform.position += direction * amount / 2;
@@ -69,7 +65,6 @@ public class DrawObject : MonoBehaviour
         }
         
 
-        Debug.Log(FloatFromVector(pivotPoint.transform.localPosition, dir));
         pivotPoint.transform.SetParent(null,true);
         
         Vector3 amtToTranslate = dir*amt/2;
