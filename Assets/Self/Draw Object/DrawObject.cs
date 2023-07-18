@@ -49,18 +49,38 @@ public class DrawObject : MonoBehaviour
         Destroy(tempPoint);
     }
     public void ModifyResize(GameObject placedObject,GameObject pivotPoint, Vector3 dir) {
-        dir = GetAbsoluteDirection(dir);
+        //dir = GetAbsoluteDirection(dir);
         
         var tempPoint = new GameObject("temp pivot point"); 
         tempPoint.transform.position = placedObject.transform.position;
         tempPoint.transform.rotation = placedObject.transform.rotation;
         pivotPoint.transform.SetParent(tempPoint.transform,true);
-        var amt =  FloatFromVector(pivotPoint.transform.localPosition ,dir) - FloatFromVector(placedObject.GetComponent<Collider>().bounds.extents,dir); 
+        var amt =  Mathf.Abs(FloatFromVector(pivotPoint.transform.localPosition ,dir)) - FloatFromVector(placedObject.GetComponent<Collider>().bounds.extents,dir);
         pivotPoint.transform.SetParent(null,true);
-        placedObject.transform.Translate(dir*amt/2);
-        placedObject.transform.localScale += dir*amt;
-        Debug.Log("trans: " + dir*amt/2 + " scale: " + dir*amt);
-        Debug.Log(placedObject.transform.localScale + " " + dir*amt);
+        
+        if (Mathf.Sign(FloatFromVector(dir, dir)) == -1)
+        {
+            if (Mathf.Sign(amt) != -1)
+            {
+                placedObject.transform.Translate(dir*amt/2);
+                placedObject.transform.localScale += GetAbsoluteDirection(dir*amt); 
+            }
+            else
+            {
+                placedObject.transform.Translate(GetAbsoluteDirection(dir*amt/2));
+                placedObject.transform.localScale += dir*Mathf.Abs(amt); 
+            }
+ 
+        }
+        else
+        {
+            placedObject.transform.Translate(dir*amt/2);
+            placedObject.transform.localScale += dir*amt;  
+        }
+        
+
+
+
         
         /*
         negative dir = negative trans, negative scale

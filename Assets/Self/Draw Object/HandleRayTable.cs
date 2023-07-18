@@ -103,9 +103,6 @@ public class HandleRayTable : MonoBehaviour
         addPointObj.transform.position = addPoint; 
         objectDrawer.SecondResize(placedObject,addPointObj);
         addPointObj.transform.SetParent(placedObject.transform,true);
-        var thing = placedObject.GetComponent<Collider>().bounds.max - addPointObj.transform.localScale;
-        lol += thing + "|";
-        Debug.Log(thing);
         Destroy(addPointObj);
     }
     public void Select()
