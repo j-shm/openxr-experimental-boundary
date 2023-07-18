@@ -56,42 +56,49 @@ public class DrawObject : MonoBehaviour
         tempPoint.transform.rotation = placedObject.transform.rotation;
         pivotPoint.transform.SetParent(tempPoint.transform,true);
         var amt =  Mathf.Abs(FloatFromVector(pivotPoint.transform.localPosition ,dir)) - FloatFromVector(placedObject.GetComponent<Collider>().bounds.extents,dir);
+        
+        //prevent the scale from switching
+        if (Mathf.Sign(FloatFromVector(pivotPoint.transform.localPosition, dir)) 
+            != Mathf.Sign(FloatFromVector(dir,dir)) 
+            || (Mathf.Abs(FloatFromVector(placedObject.transform.localScale,dir)) < 0.01 && Mathf.Sign(amt) == -1f)
+           )
+        {
+            pivotPoint.transform.SetParent(null,true);
+            Destroy(tempPoint);
+            return;
+        }
+        
+
+        Debug.Log(FloatFromVector(pivotPoint.transform.localPosition, dir));
         pivotPoint.transform.SetParent(null,true);
         
+        Vector3 amtToTranslate = dir*amt/2;
+        Vector3 amtToScale = dir*amt;
         if (Mathf.Sign(FloatFromVector(dir, dir)) == -1)
         {
             if (Mathf.Sign(amt) != -1)
             {
-                placedObject.transform.Translate(dir*amt/2);
-                placedObject.transform.localScale += GetAbsoluteDirection(dir*amt); 
+                amtToTranslate = dir*amt/2;
+                amtToScale = GetAbsoluteDirection(dir*amt);
             }
             else
             {
-                placedObject.transform.Translate(GetAbsoluteDirection(dir*amt/2));
-                placedObject.transform.localScale += dir*Mathf.Abs(amt); 
+                amtToTranslate = GetAbsoluteDirection(dir*amt/2);
+                amtToScale = dir*Mathf.Abs(amt); 
             }
- 
         }
-        else
-        {
-            placedObject.transform.Translate(dir*amt/2);
-            placedObject.transform.localScale += dir*amt;  
-        }
-        
+
+        placedObject.transform.Translate(amtToTranslate);
+        placedObject.transform.localScale += amtToScale;
 
 
-
-        
-        /*
-        negative dir = negative trans, negative scale
-        pos dir = pos trans, pos scale
-        */
         Destroy(tempPoint);
     }
     private Vector3 GetAbsoluteDirection(Vector3 direction)
     {
         return new Vector3(Mathf.Abs(direction.x), Mathf.Abs(direction.y), Mathf.Abs(direction.z));
     }
+    
     private float FloatFromVector(Vector3 point, Vector3 direction)
     {
         Vector3 multipliedPoint = Vector3.Scale(point , direction);
