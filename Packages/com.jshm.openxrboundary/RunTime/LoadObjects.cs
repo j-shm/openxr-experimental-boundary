@@ -60,6 +60,9 @@ public class LoadObjects : MonoBehaviour
         Load(null);
     }
     
+    public void DoLoadQuest() {
+        Load("/sdcard/documents/boundarysaves/roomscaleObjects.json");
+    }
     public delegate void OnLoad(GameObject corner);
     public OnLoad onLoad;
     private string CheckSaveExists(string saveName = null, bool isFullFilePath = false)

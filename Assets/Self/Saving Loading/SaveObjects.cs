@@ -32,7 +32,7 @@ public class SaveObjects : MonoBehaviour
         {
             saveName = "roomscaleObjects.json";
         }
-        string savePath = Application.persistentDataPath + "/saves/";
+        string savePath = "/sdcard/documents/boundarysaves/";
         if (!Directory.Exists(savePath))
         {
             Directory.CreateDirectory(savePath);
